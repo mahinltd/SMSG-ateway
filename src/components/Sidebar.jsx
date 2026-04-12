@@ -1,6 +1,6 @@
-// ©2026 Application or Website Name Mahin Ltd develop by (Tanvir)
+// ©2026 SMS GATEWAY Mahin Ltd develop by (Tanvir)
 import { BarChart3, Inbox, LogOut, MessageSquare, Smartphone } from 'lucide-react'
-import { NavLink, useNavigate } from 'react-router-dom'
+import { Link, NavLink, useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 
 const navItems = [
@@ -68,6 +68,21 @@ function Sidebar() {
         <LogOut size={15} />
         Logout
       </button>
+
+      <div className="mt-6 border-t border-slate-700 pt-4">
+        <p className="text-xs uppercase tracking-[0.2em] text-slate-400">Help &amp; Support</p>
+        <div className="mt-3 flex flex-wrap gap-x-4 gap-y-2 text-sm">
+          <Link to="/terms" className="text-slate-300 transition hover:text-blue-300">
+            Terms
+          </Link>
+          <Link to="/privacy" className="text-slate-300 transition hover:text-blue-300">
+            Privacy
+          </Link>
+          <Link to="/contact" className="text-slate-300 transition hover:text-blue-300">
+            Contact
+          </Link>
+        </div>
+      </div>
     </aside>
   )
 }

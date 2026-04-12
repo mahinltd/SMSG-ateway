@@ -1,13 +1,16 @@
-// ©2026 Application or Website Name Mahin Ltd develop by (Tanvir)
+// ©2026 SMS GATEWAY Mahin Ltd develop by (Tanvir)
 import { Navigate, Route, Routes } from 'react-router-dom'
 import ProtectedRoute from './components/ProtectedRoute'
 import { useAuth } from './context/AuthContext'
 import DashboardPage from './pages/DashboardPage'
 import DevicesPage from './pages/DevicesPage'
+import ContactPage from './pages/ContactPage'
 import InboxPage from './pages/InboxPage'
 import LoginPage from './pages/LoginPage'
 import MessagesPage from './pages/MessagesPage'
+import PrivacyPage from './pages/PrivacyPage'
 import RegisterPage from './pages/RegisterPage'
+import TermsPage from './pages/TermsPage'
 
 function RedirectIfAuthenticated({ children }) {
   const { isAuthenticated } = useAuth()
@@ -38,6 +41,10 @@ function App() {
           </RedirectIfAuthenticated>
         }
       />
+
+      <Route path="/terms" element={<TermsPage />} />
+      <Route path="/privacy" element={<PrivacyPage />} />
+      <Route path="/contact" element={<ContactPage />} />
 
       <Route
         path="/"

@@ -1,4 +1,4 @@
-// ©2026 Application or Website Name Mahin Ltd develop by (Tanvir)
+// ©2026 SMS GATEWAY Mahin Ltd develop by (Tanvir)
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import LoadingSpinner from '../components/LoadingSpinner'
@@ -117,6 +117,20 @@ function LoginPage() {
             Create one
           </Link>
         </p>
+
+        <footer className="mt-6 border-t border-slate-700 pt-4 text-xs text-slate-400">
+          <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
+            <Link to="/terms" className="transition hover:text-blue-300">
+              Terms
+            </Link>
+            <Link to="/privacy" className="transition hover:text-blue-300">
+              Privacy
+            </Link>
+            <Link to="/contact" className="transition hover:text-blue-300">
+              Contact
+            </Link>
+          </div>
+        </footer>
       </div>
     </main>
   )
