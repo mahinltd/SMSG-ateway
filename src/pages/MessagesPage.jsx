@@ -75,6 +75,117 @@ function sortByDateDescending(items) {
   })
 }
 
+function resolveTimestamp(item) {
+  return item?.createdAt || item?.created_at || item?.timestamp || item?.time || ''
+}
+
+function resolveMessageBody(item) {
+  return (
+    item?.messageBody ||
+    item?.message_body ||
+    item?.message ||
+    item?.body ||
+    item?.text ||
+    ''
+  )
+}
+
+function resolvePhoneNumber(item) {
+  return item?.phone_number || item?.phoneNumber || item?.to || item?.from || ''
+}
+
+function resolveCorrelationId(item) {
+  return item?.correlationId || item?.correlation_id || item?.multipartId || item?.multipart_id || ''
+}
+
+function mergeMessageSegments(rawMessages) {
+  const sorted = [...rawMessages].sort((a, b) => {
+    const aTime = new Date(resolveTimestamp(a) || 0).getTime()
+    const bTime = new Date(resolveTimestamp(b) || 0).getTime()
+    return aTime - bTime
+  })
+
+  const groups = []
+  const MERGE_WINDOW_MS = 8000
+
+  for (const item of sorted) {
+    const status = String(item?.status || 'pending').toLowerCase()
+    const phone = String(resolvePhoneNumber(item) || '').trim().toLowerCase()
+    const direction = String(item?.direction || item?.type || 'sent').toLowerCase()
+    const correlation = String(resolveCorrelationId(item) || '').trim().toLowerCase()
+    const itemTs = new Date(resolveTimestamp(item) || 0).getTime()
+
+    let targetGroup = null
+
+    if (correlation) {
+      targetGroup = groups.find((group) => group.correlation && group.correlation === correlation)
+    }
+
+    if (!targetGroup) {
+      targetGroup = groups.find((group) => {
+        if (group.correlation || correlation) {
+          return false
+        }
+
+        const closeInTime = Math.abs(itemTs - group.lastTs) <= MERGE_WINDOW_MS
+        return group.phone === phone && group.status === status && group.direction === direction && closeInTime
+      })
+    }
+
+    if (!targetGroup) {
+      groups.push({
+        correlation,
+        phone,
+        direction,
+        status,
+        lastTs: itemTs,
+        parts: [item],
+      })
+      continue
+    }
+
+    targetGroup.parts.push(item)
+    targetGroup.lastTs = Math.max(targetGroup.lastTs, itemTs)
+  }
+
+  return groups
+    .map((group) => {
+      const orderedParts = [...group.parts].sort((a, b) => {
+        const aTime = new Date(resolveTimestamp(a) || 0).getTime()
+        const bTime = new Date(resolveTimestamp(b) || 0).getTime()
+        return aTime - bTime
+      })
+
+      const mergedBody = orderedParts.map((part) => resolveMessageBody(part)).join('')
+      const statuses = orderedParts.map((part) => String(part?.status || 'pending').toLowerCase())
+      const allDelivered = statuses.every((value) => ['delivered', 'sent', 'success'].includes(value))
+      const hasFailed = statuses.some((value) => ['failed', 'error', 'undelivered'].includes(value))
+      const latestPart = orderedParts[orderedParts.length - 1]
+
+      const finalStatus = allDelivered
+        ? 'delivered'
+        : hasFailed
+          ? 'failed'
+          : latestPart?.status || 'pending'
+
+      return {
+        ...latestPart,
+        mergedPartCount: orderedParts.length,
+        mergedPartIds: orderedParts.map((part) => extractId(part)).filter(Boolean),
+        messageBody: mergedBody || '(No content)',
+        message_body: mergedBody || '(No content)',
+        message: mergedBody || '(No content)',
+        status: finalStatus,
+        createdAt: resolveTimestamp(latestPart) || new Date().toISOString(),
+      }
+    })
+    .sort((a, b) => {
+      const aTime = new Date(resolveTimestamp(a) || 0).getTime()
+      const bTime = new Date(resolveTimestamp(b) || 0).getTime()
+      return bTime - aTime
+    })
+}
+
 function MessagesPage() {
   const { token } = useAuth()
 
@@ -97,6 +208,8 @@ function MessagesPage() {
     () => devices.filter((device) => isAndroidDevice(device)),
     [devices],
   )
+
+  const displayMessages = useMemo(() => mergeMessageSegments(messages), [messages])
 
   const openMessageDetails = (message) => {
     const bodyText =
@@ -413,7 +526,7 @@ function MessagesPage() {
               <div className="mb-4 flex items-center justify-between">
                 <h3 className="text-lg font-semibold text-white">Message Log</h3>
                 <span className="rounded-full border border-slate-600 bg-slate-900 px-3 py-1 text-xs text-slate-300">
-                  {messages.length} total
+                  {displayMessages.length} total
                 </span>
               </div>
 
@@ -424,18 +537,18 @@ function MessagesPage() {
                 </div>
               ) : null}
 
-              {!isLoadingMessages && messages.length === 0 ? (
+              {!isLoadingMessages && displayMessages.length === 0 ? (
                 <p className="text-sm text-slate-300">No messages yet. Sent and received SMS will appear here.</p>
               ) : null}
 
-              {!isLoadingMessages && messages.length > 0 ? (
+              {!isLoadingMessages && displayMessages.length > 0 ? (
                 <ul className="space-y-3">
-                  {messages.map((item, index) => {
+                  {displayMessages.map((item, index) => {
                     const id = extractId(item) || `${item?.createdAt || 'msg'}-${index}`
                     const createdLabel = item?.createdAt || item?.timestamp
                     const direction = String(item?.direction || item?.type || 'sent').toLowerCase()
                     const isIncoming = ['received', 'inbound', 'incoming'].includes(direction)
-                    const fromOrTo = item?.to || item?.phoneNumber || item?.from || 'Unknown number'
+                    const fromOrTo = item?.phone_number || item?.to || item?.phoneNumber || item?.from || 'Unknown number'
                     const bodyText =
                       item?.messageBody ||
                       item?.message_body || item?.message || item?.body || item?.text || '(No content)'
