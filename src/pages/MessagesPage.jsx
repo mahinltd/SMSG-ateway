@@ -33,6 +33,26 @@ function isDeviceOnline(device) {
   return ['online', 'connected', 'ready', 'active', true].includes(value)
 }
 
+function isAndroidDevice(device) {
+  const typeValue = String(device?.type || device?.platform || device?.deviceType || '').trim().toLowerCase()
+  const nameValue = String(device?.name || device?.deviceName || device?.title || '').trim().toLowerCase()
+  const deviceIdValue = String(
+    device?.deviceId || device?.device_id || device?.androidDeviceId || device?.android_device_id || '',
+  )
+    .trim()
+    .toLowerCase()
+
+  const hasValidAndroidDeviceId =
+    deviceIdValue.length > 0 &&
+    !['pending', 'temp', 'temporary', 'web dashboard', 'browser', 'null', 'undefined'].includes(deviceIdValue)
+
+  const looksLikeWebDashboard = nameValue.includes('web dashboard') || nameValue.includes('dashboard')
+
+  const isExplicitAndroidType = ['android', 'android_client', 'android-client', 'mobile'].includes(typeValue)
+
+  return (hasValidAndroidDeviceId || isExplicitAndroidType) && !looksLikeWebDashboard
+}
+
 function getStatusBadge(status) {
   const normalized = String(status || 'pending').toLowerCase()
 
@@ -73,7 +93,10 @@ function MessagesPage() {
     message: '',
   })
 
-  const onlineDevices = useMemo(() => devices.filter(isDeviceOnline), [devices])
+  const androidDevices = useMemo(
+    () => devices.filter((device) => isDeviceOnline(device) && isAndroidDevice(device)),
+    [devices],
+  )
 
   const openMessageDetails = (message) => {
     const bodyText =
@@ -124,11 +147,15 @@ function MessagesPage() {
         const list = normalizeList(response.data, 'devices')
         setDevices(list)
 
-        const firstOnlineId = String(list.find(isDeviceOnline)?._id || list.find(isDeviceOnline)?.id || '')
+        const firstAndroidDeviceId = String(
+          list.find((device) => isDeviceOnline(device) && isAndroidDevice(device))?._id ||
+            list.find((device) => isDeviceOnline(device) && isAndroidDevice(device))?.id ||
+            '',
+        )
 
         setForm((previous) => ({
           ...previous,
-          deviceId: previous.deviceId || firstOnlineId,
+          deviceId: previous.deviceId || firstAndroidDeviceId,
         }))
       } catch (requestError) {
         setError(
@@ -312,13 +339,17 @@ function MessagesPage() {
                     required
                     value={form.deviceId}
                     onChange={handleChange}
-                    disabled={isLoadingDevices || isSending || onlineDevices.length === 0}
+                    disabled={isLoadingDevices || isSending || androidDevices.length === 0}
                     className="w-full rounded-lg border border-slate-600 bg-slate-900 px-3 py-2 text-sm text-slate-100 outline-none transition focus:border-blue-500"
                   >
                     <option value="">
-                      {isLoadingDevices ? 'Loading devices...' : 'Select an online device'}
+                      {isLoadingDevices
+                        ? 'Loading devices...'
+                        : androidDevices.length === 0
+                          ? 'No Android Device Connected'
+                          : 'Select an Android device'}
                     </option>
-                    {onlineDevices.map((device) => {
+                    {androidDevices.map((device) => {
                       const id = String(device._id || device.id || '')
                       const displayName = device.name || device.deviceName || device.phoneModel || 'Device'
 
@@ -367,7 +398,7 @@ function MessagesPage() {
 
                 <button
                   type="submit"
-                  disabled={isSending || !form.deviceId}
+                    disabled={isSending || !form.deviceId || androidDevices.length === 0}
                   className="flex w-full items-center justify-center gap-2 rounded-lg bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-blue-500 disabled:cursor-not-allowed disabled:bg-blue-900"
                 >
                   {isSending ? (
