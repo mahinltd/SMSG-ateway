@@ -1,0 +1,16 @@
+/* ©2026 Application or Website Name Mahin Ltd develop by (Tanvir) */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  @apply min-h-screen bg-slate-900 text-slate-200 antialiased;
+  background-image:
+    radial-gradient(circle at 15% 15%, rgba(37, 99, 235, 0.28), transparent 28%),
+    radial-gradient(circle at 85% 10%, rgba(30, 64, 175, 0.22), transparent 30%),
+    linear-gradient(to bottom right, #020617, #0f172a 55%, #1e1b4b);
+}
+
+#root {
+  @apply min-h-screen;
+}
