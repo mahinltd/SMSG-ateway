@@ -1,4 +1,4 @@
-// ©2026 Application or Website Name Mahin Ltd develop by (Tanvir)
+// ©2026 SMS GATEWAY Mahin Ltd develop by (Tanvir)
 import { useEffect, useMemo, useState } from 'react'
 import ConnectDeviceModal from '../components/ConnectDeviceModal'
 import LoadingSpinner from '../components/LoadingSpinner'
@@ -19,6 +19,23 @@ function normalizeDevices(payload) {
   }
 
   return []
+}
+
+function isDisplayableDevice(device) {
+  const status = String(device?.status || '').trim().toLowerCase()
+  const androidDeviceId = String(
+    device?.deviceId || device?.device_id || device?.androidDeviceId || device?.android_device_id || '',
+  )
+    .trim()
+    .toLowerCase()
+
+  const hasValidAndroidDeviceId =
+    androidDeviceId.length > 0 &&
+    !['pending', 'temp', 'temporary', 'unknown', 'null', 'undefined'].includes(androidDeviceId)
+
+  const hasConnectedStatus = ['online', 'connected', 'disconnected'].includes(status)
+
+  return hasValidAndroidDeviceId || hasConnectedStatus
 }
 
 function DevicesPage() {
@@ -46,7 +63,8 @@ function DevicesPage() {
 
     try {
       const response = await api.get('/devices')
-      setDevices(normalizeDevices(response.data))
+      const filteredDevices = normalizeDevices(response.data).filter(isDisplayableDevice)
+      setDevices(filteredDevices)
     } catch (requestError) {
       setError(
         requestError?.response?.data?.message ||

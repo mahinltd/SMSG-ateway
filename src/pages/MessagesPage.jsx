@@ -30,7 +30,7 @@ function extractId(item) {
 
 function isDeviceOnline(device) {
   const value = typeof device?.status === 'string' ? device.status.toLowerCase() : device?.status
-  return ['online', 'connected', true].includes(value)
+  return ['online', 'connected', 'ready', 'active', true].includes(value)
 }
 
 function getStatusBadge(status) {
@@ -170,6 +170,10 @@ function MessagesPage() {
 
     const socket = createSocketConnection(token)
 
+    socket.on('connect_error', (socketError) => {
+      setError(socketError?.message || 'Real-time connection failed. Refresh and try again.')
+    })
+
     socket.on('SMS_STATUS_UPDATED', (payload) => {
       const payloadId = extractId(payload)
       const nextStatus = payload?.status || payload?.deliveryStatus || 'pending'
@@ -231,6 +235,11 @@ function MessagesPage() {
         device_id: form.deviceId,
         phone_number: form.phoneNumber.trim(),
         message_body: form.message.trim(),
+        deviceId: form.deviceId,
+        phoneNumber: form.phoneNumber.trim(),
+        to: form.phoneNumber.trim(),
+        message: form.message.trim(),
+        body: form.message.trim(),
       }
 
       const response = await api.post('/messages/send', payload)

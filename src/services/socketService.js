@@ -6,11 +6,17 @@ export function createSocketConnection(token) {
 
   return io(socketBaseUrl, {
     path: '/socket.io',
+    transports: ['websocket', 'polling'],
     timeout: 10000,
     reconnection: true,
     reconnectionAttempts: 5,
     reconnectionDelay: 1200,
     auth: {
+      token,
+      accessToken: token,
+      authorization: token ? `Bearer ${token}` : '',
+    },
+    query: {
       token,
       accessToken: token,
       authorization: token ? `Bearer ${token}` : '',

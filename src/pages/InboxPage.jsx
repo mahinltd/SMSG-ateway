@@ -27,7 +27,7 @@ function normalizeMessages(payload) {
 function isReceivedMessage(message) {
   const direction = String(message?.direction || '').toLowerCase()
   const type = String(message?.type || '').toLowerCase()
-  return direction === 'received' || type === 'received'
+  return ['received', 'inbound', 'incoming'].includes(direction) || ['received', 'inbound', 'incoming'].includes(type)
 }
 
 function extractMessageId(message) {
