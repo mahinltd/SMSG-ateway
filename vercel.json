@@ -1,0 +1,9 @@
+{
+  "copyright": "// ©2026 SMS GATEWAY Mahin Ltd develop by (Tanvir)",
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ]
+}
