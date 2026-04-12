@@ -5,33 +5,17 @@ import api from '../services/api'
 import LoadingSpinner from './LoadingSpinner'
 
 async function requestConnectionToken() {
-  const candidates = [
-    () =>
-      api.post('/devices/generate-token', {
-        deviceName: 'Web Dashboard',
-      }),
-    () => api.post('/devices/generate-token'),
-  ]
+  const response = await api.post('/devices/generate-token')
+  const token =
+    response?.data?.connection_token ||
+    response?.data?.connectionToken ||
+    response?.data?.token
 
-  let lastError = null
-
-  for (const candidate of candidates) {
-    try {
-      const response = await candidate()
-      const token =
-        response?.data?.connection_token ||
-        response?.data?.connectionToken ||
-        response?.data?.token
-
-      if (token) {
-        return String(token)
-      }
-    } catch (error) {
-      lastError = error
-    }
+  if (token) {
+    return String(token)
   }
 
-  throw lastError || new Error('No connection token returned by API')
+  throw new Error('No connection token returned by API')
 }
 
 function ConnectDeviceModal({ isOpen, onClose }) {
