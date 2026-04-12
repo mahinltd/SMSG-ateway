@@ -42,15 +42,15 @@ function isAndroidDevice(device) {
     .trim()
     .toLowerCase()
 
-  const hasValidAndroidDeviceId =
-    deviceIdValue.length > 0 &&
-    !['pending', 'temp', 'temporary', 'web dashboard', 'browser', 'null', 'undefined'].includes(deviceIdValue)
-
   const looksLikeWebDashboard = nameValue.includes('web dashboard') || nameValue.includes('dashboard')
+  const hasValidDeviceId =
+    deviceIdValue.length > 0 &&
+    !['pending', 'temp', 'temporary', 'null', 'undefined'].includes(deviceIdValue)
 
-  const isExplicitAndroidType = ['android', 'android_client', 'android-client', 'mobile'].includes(typeValue)
+  const isExplicitAndroidType = typeValue === 'android'
+  const isMobileLikeType = ['android_client', 'android-client', 'mobile'].includes(typeValue)
 
-  return (hasValidAndroidDeviceId || isExplicitAndroidType) && !looksLikeWebDashboard
+  return !looksLikeWebDashboard && isDeviceOnline(device) && (isExplicitAndroidType || isMobileLikeType || hasValidDeviceId || !typeValue)
 }
 
 function getStatusBadge(status) {
@@ -94,7 +94,7 @@ function MessagesPage() {
   })
 
   const androidDevices = useMemo(
-    () => devices.filter((device) => isDeviceOnline(device) && isAndroidDevice(device)),
+    () => devices.filter((device) => isAndroidDevice(device)),
     [devices],
   )
 
@@ -147,11 +147,7 @@ function MessagesPage() {
         const list = normalizeList(response.data, 'devices')
         setDevices(list)
 
-        const firstAndroidDeviceId = String(
-          list.find((device) => isDeviceOnline(device) && isAndroidDevice(device))?._id ||
-            list.find((device) => isDeviceOnline(device) && isAndroidDevice(device))?.id ||
-            '',
-        )
+        const firstAndroidDeviceId = String(list.find((device) => isAndroidDevice(device))?._id || list.find((device) => isAndroidDevice(device))?.id || '')
 
         setForm((previous) => ({
           ...previous,
