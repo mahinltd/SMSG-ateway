@@ -1,8 +1,8 @@
-// ©2026 Application or Website Name Mahin Ltd develop by (Tanvir)
+// ©2026 SMS GATEWAY Mahin Ltd develop by (Tanvir)
 import { io } from 'socket.io-client'
 
 export function createSocketConnection(token) {
-  const socketBaseUrl = import.meta.env.VITE_SOCKET_URL || 'http://localhost:5000'
+  const socketBaseUrl = import.meta.env.VITE_SOCKET_URL || 'https://smsgateway-0l0y.onrender.com'
 
   return io(socketBaseUrl, {
     path: '/socket.io',

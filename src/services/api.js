@@ -1,8 +1,8 @@
-// ©2026 Application or Website Name Mahin Ltd develop by (Tanvir)
+// ©2026 SMS GATEWAY Mahin Ltd develop by (Tanvir)
 import axios from 'axios'
 
 function normalizeApiBaseUrl(rawUrl) {
-  const fallback = 'http://localhost:5000/api'
+  const fallback = 'https://smsgateway-0l0y.onrender.com/api'
   const input = (rawUrl || fallback).trim()
 
   const withoutTrailingSlash = input.replace(/\/+$/, '')
@@ -14,7 +14,7 @@ function normalizeApiBaseUrl(rawUrl) {
 }
 
 const api = axios.create({
-  baseURL: normalizeApiBaseUrl(import.meta.env.VITE_API_BASE_URL),
+  baseURL: normalizeApiBaseUrl(import.meta.env.VITE_API_URL || import.meta.env.VITE_API_BASE_URL),
 })
 
 api.interceptors.request.use((config) => {
