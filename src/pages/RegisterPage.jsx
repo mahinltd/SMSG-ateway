@@ -2,6 +2,7 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import LoadingSpinner from '../components/LoadingSpinner'
+import SiteFooter from '../components/SiteFooter'
 import { registerUser } from '../services/authService'
 
 function RegisterPage() {
@@ -51,8 +52,9 @@ function RegisterPage() {
   }
 
   return (
-    <main className="flex min-h-screen items-center justify-center px-4 py-10">
-      <div className="w-full max-w-md rounded-2xl border border-slate-700/80 bg-slate-800/90 p-7 shadow-2xl shadow-blue-950/30 backdrop-blur">
+    <main className="min-h-screen px-4 py-10">
+      <div className="mx-auto flex w-full max-w-md flex-col">
+        <div className="rounded-2xl border border-slate-700/80 bg-slate-800/90 p-7 shadow-2xl shadow-blue-950/30 backdrop-blur">
         <div className="mb-1 inline-flex items-center rounded-full border border-blue-500/30 bg-blue-500/15 px-3 py-1 text-xs font-medium uppercase tracking-[0.2em] text-blue-300">
           New Workspace
         </div>
@@ -143,6 +145,9 @@ function RegisterPage() {
             Sign in
           </Link>
         </p>
+        </div>
+
+        <SiteFooter />
       </div>
     </main>
   )

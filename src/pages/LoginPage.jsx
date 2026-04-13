@@ -2,6 +2,7 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import LoadingSpinner from '../components/LoadingSpinner'
+import SiteFooter from '../components/SiteFooter'
 import { useAuth } from '../context/AuthContext'
 import { loginUser } from '../services/authService'
 
@@ -35,7 +36,7 @@ function LoginPage() {
       }
 
       login(token)
-      navigate('/', { replace: true })
+      navigate('/dashboard', { replace: true })
     } catch (submitError) {
       setError(
         submitError?.response?.data?.message ||
@@ -48,8 +49,9 @@ function LoginPage() {
   }
 
   return (
-    <main className="flex min-h-screen items-center justify-center px-4 py-10">
-      <div className="w-full max-w-md rounded-2xl border border-slate-700/80 bg-slate-800/90 p-7 shadow-2xl shadow-blue-950/30 backdrop-blur">
+    <main className="min-h-screen px-4 py-10">
+      <div className="mx-auto flex w-full max-w-md flex-col">
+        <div className="rounded-2xl border border-slate-700/80 bg-slate-800/90 p-7 shadow-2xl shadow-blue-950/30 backdrop-blur">
         <div className="mb-1 inline-flex items-center rounded-full border border-blue-500/30 bg-blue-500/15 px-3 py-1 text-xs font-medium uppercase tracking-[0.2em] text-blue-300">
           SaaS Console
         </div>
@@ -118,19 +120,9 @@ function LoginPage() {
           </Link>
         </p>
 
-        <footer className="mt-6 border-t border-slate-700 pt-4 text-xs text-slate-400">
-          <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
-            <Link to="/terms" className="transition hover:text-blue-300">
-              Terms
-            </Link>
-            <Link to="/privacy" className="transition hover:text-blue-300">
-              Privacy
-            </Link>
-            <Link to="/contact" className="transition hover:text-blue-300">
-              Contact
-            </Link>
-          </div>
-        </footer>
+        </div>
+
+        <SiteFooter />
       </div>
     </main>
   )

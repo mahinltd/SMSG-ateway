@@ -6,7 +6,7 @@ import { useAuth } from '../context/AuthContext'
 const navItems = [
   {
     label: 'Dashboard',
-    path: '/',
+    path: '/dashboard',
     icon: BarChart3,
   },
   {
