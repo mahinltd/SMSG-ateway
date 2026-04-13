@@ -1,4 +1,4 @@
-// ©2026 SMS GATEWAY Mahin Ltd develop by (Tanvir)
+// ©2026 SMS GATEWAY Mahin Ltd Developed By Tanvir
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import LoadingSpinner from '../components/LoadingSpinner'

@@ -1,4 +1,4 @@
-// ©2026 SMS GATEWAY Mahin Ltd develop by (Tanvir)
+// ©2026 SMS GATEWAY Mahin Ltd Developed By Tanvir
 import { useEffect, useMemo, useState } from 'react'
 import { Trash2 } from 'lucide-react'
 import LoadingSpinner from '../components/LoadingSpinner'

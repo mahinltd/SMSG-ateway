@@ -1,5 +1,5 @@
-// ©2026 SMS GATEWAY Mahin Ltd develop by (Tanvir)
-import { BarChart3, Inbox, LogOut, MessageSquare, Smartphone } from 'lucide-react'
+// ©2026 SMS GATEWAY Mahin Ltd Developed By Tanvir
+import { BarChart3, Download, Inbox, LogOut, MessageSquare, Smartphone } from 'lucide-react'
 import { Link, NavLink, useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 
@@ -23,6 +23,11 @@ const navItems = [
     label: 'Inbox',
     path: '/inbox',
     icon: Inbox,
+  },
+  {
+    label: 'Download App',
+    path: '/download',
+    icon: Download,
   },
 ]
 

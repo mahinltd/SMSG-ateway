@@ -1,7 +1,8 @@
-// ©2026 SMS GATEWAY Mahin Ltd develop by (Tanvir)
+// ©2026 SMS GATEWAY Mahin Ltd Developed By Tanvir
 import { Navigate, Route, Routes } from 'react-router-dom'
 import ProtectedRoute from './components/ProtectedRoute'
 import { useAuth } from './context/AuthContext'
+import DownloadPage from './pages/DownloadPage'
 import DashboardPage from './pages/DashboardPage'
 import DevicesPage from './pages/DevicesPage'
 import ContactPage from './pages/ContactPage'
@@ -75,6 +76,14 @@ function App() {
         element={
           <ProtectedRoute>
             <InboxPage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/download"
+        element={
+          <ProtectedRoute>
+            <DownloadPage />
           </ProtectedRoute>
         }
       />

@@ -1,4 +1,4 @@
-// ©2026 SMS GATEWAY Mahin Ltd develop by (Tanvir)
+// ©2026 SMS GATEWAY Mahin Ltd Developed By Tanvir
 import { Code2, Globe, Mail } from 'lucide-react'
 
 const contactLinks = [

@@ -1,4 +1,4 @@
-// ©2026 SMS GATEWAY Mahin Ltd develop by (Tanvir)
+// ©2026 SMS GATEWAY Mahin Ltd Developed By Tanvir
 import { Link } from 'react-router-dom'
 
 function PrivacyPage() {
