@@ -3,10 +3,12 @@ import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import LoadingSpinner from '../components/LoadingSpinner'
 import SiteFooter from '../components/SiteFooter'
+import { useLanguage } from '../context/LanguageContext'
 import { registerUser } from '../services/authService'
 
 function RegisterPage() {
   const navigate = useNavigate()
+  const { t } = useLanguage()
 
   const [form, setForm] = useState({
     name: '',
@@ -30,7 +32,7 @@ function RegisterPage() {
 
     try {
       await registerUser(form)
-      setSuccess('Account created successfully. Redirecting to login...')
+      setSuccess(t('register.success'))
       setTimeout(() => {
         navigate('/login', { replace: true })
       }, 1000)
@@ -45,7 +47,7 @@ function RegisterPage() {
         data: submitError?.response?.data,
       })
 
-      setError(serverMessage || submitError.message || 'Registration failed')
+      setError(serverMessage || submitError.message || t('register.registerFailed'))
     } finally {
       setIsLoading(false)
     }
@@ -56,15 +58,15 @@ function RegisterPage() {
       <div className="mx-auto flex w-full max-w-md flex-col">
         <div className="rounded-2xl border border-slate-700/80 bg-slate-800/90 p-7 shadow-2xl shadow-blue-950/30 backdrop-blur">
         <div className="mb-1 inline-flex items-center rounded-full border border-blue-500/30 bg-blue-500/15 px-3 py-1 text-xs font-medium uppercase tracking-[0.2em] text-blue-300">
-          New Workspace
+          {t('register.badge')}
         </div>
-        <h1 className="text-2xl font-semibold text-white">Create Account</h1>
-        <p className="mt-2 text-sm text-slate-300">Register for the SMS Gateway dashboard.</p>
+        <h1 className="text-2xl font-semibold text-white">{t('register.title')}</h1>
+        <p className="mt-2 text-sm text-slate-300">{t('register.subtitle')}</p>
 
         <form className="mt-6 space-y-4" onSubmit={handleSubmit}>
           <div>
             <label className="mb-1 block text-sm text-slate-200" htmlFor="name">
-              Name
+              {t('register.name')}
             </label>
             <input
               id="name"
@@ -80,7 +82,7 @@ function RegisterPage() {
 
           <div>
             <label className="mb-1 block text-sm text-slate-200" htmlFor="email">
-              Email
+              {t('register.email')}
             </label>
             <input
               id="email"
@@ -96,7 +98,7 @@ function RegisterPage() {
 
           <div>
             <label className="mb-1 block text-sm text-slate-200" htmlFor="password">
-              Password
+              {t('register.password')}
             </label>
             <input
               id="password"
@@ -131,18 +133,18 @@ function RegisterPage() {
             {isLoading ? (
               <>
                 <LoadingSpinner />
-                Creating account...
+                {t('register.creating')}
               </>
             ) : (
-              'Register'
+              t('register.register')
             )}
           </button>
         </form>
 
         <p className="mt-4 text-sm text-slate-300">
-          Already have an account?{' '}
+          {t('register.already')}{' '}
           <Link to="/login" className="font-medium text-blue-400 hover:text-blue-300">
-            Sign in
+            {t('register.signIn')}
           </Link>
         </p>
         </div>

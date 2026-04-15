@@ -3,6 +3,7 @@ import { useEffect } from 'react'
 import { Navigate, Route, Routes, useLocation } from 'react-router-dom'
 import ProtectedRoute from './components/ProtectedRoute'
 import { useAuth } from './context/AuthContext'
+import { useLanguage } from './context/LanguageContext'
 import LandingPage from './pages/LandingPage'
 import DownloadPage from './pages/DownloadPage'
 import DashboardPage from './pages/DashboardPage'
@@ -37,26 +38,27 @@ function HomeRoute() {
 
 function DocumentTitleManager() {
   const location = useLocation()
+  const { t } = useLanguage()
 
   useEffect(() => {
-    const pathToTitle = {
-      '/': 'Home',
-      '/login': 'Login',
-      '/register': 'Register',
-      '/dashboard': 'Dashboard',
-      '/devices': 'Devices',
-      '/messages': 'Messages',
-      '/inbox': 'Inbox',
-      '/download': 'Download',
-      '/terms': 'Terms',
-      '/privacy': 'Privacy',
-      '/contact': 'Contact',
+    const pathToTitleKey = {
+      '/': 'titles.home',
+      '/login': 'titles.login',
+      '/register': 'titles.register',
+      '/dashboard': 'titles.dashboard',
+      '/devices': 'titles.devices',
+      '/messages': 'titles.messages',
+      '/inbox': 'titles.inbox',
+      '/download': 'titles.download',
+      '/terms': 'titles.terms',
+      '/privacy': 'titles.privacy',
+      '/contact': 'titles.contact',
     }
 
-    const pageTitle = pathToTitle[location.pathname] || 'SMS Gateway'
+    const pageTitle = t(pathToTitleKey[location.pathname] || 'titles.default')
 
-    document.title = `${pageTitle} | SMS Gateway`
-  }, [location.pathname])
+    document.title = `${pageTitle} | ${t('common.appName')}`
+  }, [location.pathname, t])
 
   return null
 }

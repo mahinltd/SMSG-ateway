@@ -4,11 +4,13 @@ import { Link, useNavigate } from 'react-router-dom'
 import LoadingSpinner from '../components/LoadingSpinner'
 import SiteFooter from '../components/SiteFooter'
 import { useAuth } from '../context/AuthContext'
+import { useLanguage } from '../context/LanguageContext'
 import { loginUser } from '../services/authService'
 
 function LoginPage() {
   const navigate = useNavigate()
   const { login } = useAuth()
+  const { t } = useLanguage()
 
   const [form, setForm] = useState({
     email: '',
@@ -41,7 +43,7 @@ function LoginPage() {
       setError(
         submitError?.response?.data?.message ||
           submitError.message ||
-          'Login failed',
+          t('login.loginFailed'),
       )
     } finally {
       setIsLoading(false)
@@ -53,15 +55,15 @@ function LoginPage() {
       <div className="mx-auto flex w-full max-w-md flex-col">
         <div className="rounded-2xl border border-slate-700/80 bg-slate-800/90 p-7 shadow-2xl shadow-blue-950/30 backdrop-blur">
         <div className="mb-1 inline-flex items-center rounded-full border border-blue-500/30 bg-blue-500/15 px-3 py-1 text-xs font-medium uppercase tracking-[0.2em] text-blue-300">
-          SaaS Console
+          {t('login.badge')}
         </div>
-        <h1 className="text-2xl font-semibold text-white">SMS Gateway Login</h1>
-        <p className="mt-2 text-sm text-slate-300">Access your SMS control panel.</p>
+        <h1 className="text-2xl font-semibold text-white">{t('login.title')}</h1>
+        <p className="mt-2 text-sm text-slate-300">{t('login.subtitle')}</p>
 
         <form className="mt-6 space-y-4" onSubmit={handleSubmit}>
           <div>
             <label className="mb-1 block text-sm text-slate-200" htmlFor="email">
-              Email
+              {t('login.email')}
             </label>
             <input
               id="email"
@@ -77,7 +79,7 @@ function LoginPage() {
 
           <div>
             <label className="mb-1 block text-sm text-slate-200" htmlFor="password">
-              Password
+              {t('login.password')}
             </label>
             <input
               id="password"
@@ -105,18 +107,18 @@ function LoginPage() {
             {isLoading ? (
               <>
                 <LoadingSpinner />
-                Signing in...
+                {t('login.signingIn')}
               </>
             ) : (
-              'Sign In'
+              t('login.signIn')
             )}
           </button>
         </form>
 
         <p className="mt-4 text-sm text-slate-300">
-          No account yet?{' '}
+          {t('login.noAccount')}{' '}
           <Link to="/register" className="font-medium text-blue-400 hover:text-blue-300">
-            Create one
+            {t('login.createOne')}
           </Link>
         </p>
 

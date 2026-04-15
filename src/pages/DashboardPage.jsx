@@ -2,9 +2,11 @@
 import { useEffect, useState } from 'react'
 import LoadingSpinner from '../components/LoadingSpinner'
 import Sidebar from '../components/Sidebar'
+import { useLanguage } from '../context/LanguageContext'
 import api from '../services/api'
 
 function DashboardPage() {
+  const { t } = useLanguage()
   const [stats, setStats] = useState({
     activeDevices: 0,
     smsSentToday: 0,
@@ -46,30 +48,30 @@ function DashboardPage() {
 
         <section className="space-y-4">
           <header className="rounded-2xl border border-slate-700/80 bg-slate-800/90 p-6 shadow-xl shadow-blue-950/20 backdrop-blur">
-            <p className="text-sm uppercase tracking-[0.2em] text-blue-300">Overview</p>
-            <h2 className="mt-2 text-3xl font-semibold text-white">Premium Messaging Workspace</h2>
+            <p className="text-sm uppercase tracking-[0.2em] text-blue-300">{t('dashboard.overview')}</p>
+            <h2 className="mt-2 text-3xl font-semibold text-white">{t('dashboard.heading')}</h2>
             <p className="mt-3 max-w-2xl text-slate-300">
-              Live operational metrics from your SMS Gateway backend.
+              {t('dashboard.subheading')}
             </p>
           </header>
 
           <div className="grid gap-4 md:grid-cols-3">
             <article className="rounded-xl border border-slate-700/80 bg-slate-800 p-5">
-              <p className="text-sm text-slate-400">Active Devices</p>
+              <p className="text-sm text-slate-400">{t('dashboard.activeDevices')}</p>
               <p className="mt-2 flex items-center gap-2 text-3xl font-semibold text-white">
                 {isLoading ? <LoadingSpinner /> : null}
                 {isLoading ? '...' : stats.activeDevices}
               </p>
             </article>
             <article className="rounded-xl border border-slate-700/80 bg-slate-800 p-5">
-              <p className="text-sm text-slate-400">SMS Sent Today</p>
+              <p className="text-sm text-slate-400">{t('dashboard.smsSentToday')}</p>
               <p className="mt-2 flex items-center gap-2 text-3xl font-semibold text-white">
                 {isLoading ? <LoadingSpinner /> : null}
                 {isLoading ? '...' : stats.smsSentToday}
               </p>
             </article>
             <article className="rounded-xl border border-slate-700/80 bg-slate-800 p-5">
-              <p className="text-sm text-slate-400">Queued Messages</p>
+              <p className="text-sm text-slate-400">{t('dashboard.queuedMessages')}</p>
               <p className="mt-2 flex items-center gap-2 text-3xl font-semibold text-white">
                 {isLoading ? <LoadingSpinner /> : null}
                 {isLoading ? '...' : stats.queuedMessages}
@@ -84,7 +86,7 @@ function DashboardPage() {
               disabled={isLoading}
               className="mt-4 rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-blue-500"
             >
-              {isLoading ? 'Refreshing...' : 'Refresh Overview'}
+              {isLoading ? t('dashboard.refreshing') : t('dashboard.refreshOverview')}
             </button>
           </div>
         </section>
