@@ -171,13 +171,42 @@ function DownloadPage() {
     throw lastError
   }
 
+  const fetchLatestPaymentStatus = async () => {
+    try {
+      const response = await api.get('/payment/status')
+      const source = response?.data?.data || response?.data || {}
+
+      const rawStatus =
+        source?.status ||
+        source?.paymentStatus ||
+        source?.payment?.status ||
+        source?.latestPayment?.status ||
+        ''
+
+      const normalizedStatus = String(rawStatus).trim().toLowerCase()
+      const approvedByStatus = ['approved', 'paid', 'success', 'completed'].includes(normalizedStatus)
+
+      if (approvedByStatus) {
+        return { isPaid: true, token: '' }
+      }
+
+      if (typeof source?.isPaid === 'boolean') {
+        return { isPaid: source.isPaid, token: '' }
+      }
+    } catch {
+      // Fallback to profile endpoints below if payment status endpoint is unavailable.
+    }
+
+    return fetchLatestProfile()
+  }
+
   const handleRefreshPaymentStatus = async () => {
     setIsRefreshingStatus(true)
     setError('')
     setStatusMessage('')
 
     try {
-      const latest = await fetchLatestProfile()
+      const latest = await fetchLatestPaymentStatus()
 
       if (latest.token) {
         login(latest.token)
@@ -199,6 +228,41 @@ function DownloadPage() {
       setIsRefreshingStatus(false)
     }
   }
+
+  useEffect(() => {
+    if (effectiveIsPaid) {
+      return
+    }
+
+    let isMounted = true
+
+    const syncPaymentStatusOnMount = async () => {
+      try {
+        const latest = await fetchLatestPaymentStatus()
+
+        if (!isMounted) {
+          return
+        }
+
+        if (latest.token) {
+          login(latest.token)
+        }
+
+        if (latest.isPaid) {
+          setIsPaidOverride(true)
+          setStatusMessage('Payment verified. Download is now unlocked.')
+        }
+      } catch {
+        // Silent on mount to avoid noisy errors; user can still use manual refresh.
+      }
+    }
+
+    syncPaymentStatusOnMount()
+
+    return () => {
+      isMounted = false
+    }
+  }, [effectiveIsPaid, login])
 
   return (
     <main className="min-h-screen px-4 py-6 md:px-6">
