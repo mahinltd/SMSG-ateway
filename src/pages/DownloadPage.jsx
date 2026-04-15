@@ -46,7 +46,7 @@ function normalizePublicSettings(payload) {
 }
 
 function DownloadPage() {
-  const { token } = useAuth()
+  const { token, login } = useAuth()
   const { t } = useLanguage()
   const [settings, setSettings] = useState({
     bkashNumber: '',
@@ -56,8 +56,11 @@ function DownloadPage() {
   })
   const [isLoadingSettings, setIsLoadingSettings] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [isRefreshingStatus, setIsRefreshingStatus] = useState(false)
   const [error, setError] = useState('')
+  const [statusMessage, setStatusMessage] = useState('')
   const [isSubmitted, setIsSubmitted] = useState(false)
+  const [isPaidOverride, setIsPaidOverride] = useState(false)
   const [form, setForm] = useState({
     method: 'bKash',
     senderPhone: '',
@@ -69,8 +72,10 @@ function DownloadPage() {
     return resolvePaidStatus(payload)
   }, [token])
 
+  const effectiveIsPaid = isPaid || isPaidOverride
+
   useEffect(() => {
-    if (isPaid) {
+    if (effectiveIsPaid) {
       return
     }
 
@@ -93,7 +98,7 @@ function DownloadPage() {
     }
 
     fetchPublicSettings()
-  }, [isPaid])
+  }, [effectiveIsPaid])
 
   const handleChange = (event) => {
     const { name, value } = event.target
@@ -107,6 +112,7 @@ function DownloadPage() {
     event.preventDefault()
     setIsSubmitting(true)
     setError('')
+    setStatusMessage('')
 
     const payload = {
       paymentMethod: form.method,
@@ -120,6 +126,7 @@ function DownloadPage() {
     try {
       await api.post('/payment/submit', payload)
       setIsSubmitted(true)
+      setStatusMessage('Payment request submitted successfully. You can use Refresh Payment Status to check approval.')
     } catch (requestError) {
       setError(
         requestError?.response?.data?.message ||
@@ -128,6 +135,68 @@ function DownloadPage() {
       )
     } finally {
       setIsSubmitting(false)
+    }
+  }
+
+  const resolveProfilePayload = (payload) => {
+    const source = payload?.data && typeof payload.data === 'object' ? payload.data : payload
+    const user = source?.user && typeof source.user === 'object' ? source.user : source
+
+    return {
+      isPaid: Boolean(user?.isPaid ?? source?.isPaid ?? user?.paid ?? source?.paid),
+      token:
+        source?.token ||
+        source?.accessToken ||
+        source?.jwt ||
+        user?.token ||
+        user?.accessToken ||
+        '',
+    }
+  }
+
+  const fetchLatestProfile = async () => {
+    const endpoints = ['/auth/me', '/user/profile']
+
+    let lastError = null
+
+    for (const endpoint of endpoints) {
+      try {
+        const response = await api.get(endpoint)
+        return resolveProfilePayload(response?.data)
+      } catch (requestError) {
+        lastError = requestError
+      }
+    }
+
+    throw lastError
+  }
+
+  const handleRefreshPaymentStatus = async () => {
+    setIsRefreshingStatus(true)
+    setError('')
+    setStatusMessage('')
+
+    try {
+      const latest = await fetchLatestProfile()
+
+      if (latest.token) {
+        login(latest.token)
+      }
+
+      if (latest.isPaid) {
+        setIsPaidOverride(true)
+        setStatusMessage('Payment verified. Download is now unlocked.')
+      } else {
+        setStatusMessage('Payment is still pending/unpaid. Please wait a bit and try again.')
+      }
+    } catch (requestError) {
+      setError(
+        requestError?.response?.data?.message ||
+          requestError?.response?.data?.error ||
+          'Could not refresh payment status right now. Please try again.',
+      )
+    } finally {
+      setIsRefreshingStatus(false)
     }
   }
 
@@ -140,7 +209,7 @@ function DownloadPage() {
           <header className="overflow-hidden rounded-2xl border border-slate-700/80 bg-gradient-to-br from-slate-900 via-slate-800 to-blue-950 p-6 shadow-xl shadow-blue-950/30 backdrop-blur">
             <p className="text-sm uppercase tracking-[0.2em] text-blue-300">{t('download.mobileClient')}</p>
             <h2 className="mt-2 text-3xl font-semibold text-white">{t('download.title')}</h2>
-            {isPaid ? (
+            {effectiveIsPaid ? (
               <>
                 <p className="mt-3 max-w-2xl text-slate-300">
                   Thank you for your purchase. Your account is active and ready for app download.
@@ -162,7 +231,7 @@ function DownloadPage() {
             )}
           </header>
 
-          {isPaid ? (
+          {effectiveIsPaid ? (
             <article className="rounded-2xl border border-slate-700/80 bg-slate-800/90 p-6 shadow-xl shadow-blue-950/20 backdrop-blur">
               <h3 className="text-lg font-semibold text-white">{t('download.beforeInstall')}</h3>
               <p className="mt-2 text-slate-300">{t('download.beforeInstallDescription')}</p>
@@ -205,6 +274,15 @@ function DownloadPage() {
                         <li>Submit payment details in the form below for admin verification.</li>
                       </ol>
                     </div>
+
+                    <button
+                      type="button"
+                      onClick={handleRefreshPaymentStatus}
+                      disabled={isRefreshingStatus}
+                      className="mt-5 inline-flex items-center rounded-lg border border-slate-600 px-4 py-2 text-sm font-semibold text-slate-100 transition hover:bg-slate-700 disabled:cursor-not-allowed disabled:opacity-70"
+                    >
+                      {isRefreshingStatus ? 'Refreshing status...' : 'Refresh Payment Status'}
+                    </button>
                   </>
                 )}
               </article>
@@ -215,6 +293,12 @@ function DownloadPage() {
                 {error ? (
                   <p className="mt-4 rounded-lg border border-rose-500/30 bg-rose-500/10 px-3 py-2 text-sm text-rose-200">
                     {error}
+                  </p>
+                ) : null}
+
+                {statusMessage ? (
+                  <p className="mt-4 rounded-lg border border-blue-500/30 bg-blue-500/10 px-3 py-2 text-sm text-blue-200">
+                    {statusMessage}
                   </p>
                 ) : null}
 
