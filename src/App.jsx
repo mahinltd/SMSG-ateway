@@ -1,9 +1,14 @@
 // ©2026 SMS GATEWAY Mahin Ltd Developed By Tanvir
 import { useEffect } from 'react'
 import { Navigate, Route, Routes, useLocation } from 'react-router-dom'
+import AdminRoute from './components/AdminRoute'
 import ProtectedRoute from './components/ProtectedRoute'
 import { useAuth } from './context/AuthContext'
 import { useLanguage } from './context/LanguageContext'
+import AdminLayout from './layouts/AdminLayout'
+import AdminPayments from './pages/AdminPayments'
+import AdminSettings from './pages/AdminSettings'
+import AdminUsers from './pages/AdminUsers'
 import LandingPage from './pages/LandingPage'
 import DownloadPage from './pages/DownloadPage'
 import DashboardPage from './pages/DashboardPage'
@@ -41,6 +46,18 @@ function DocumentTitleManager() {
   const { t } = useLanguage()
 
   useEffect(() => {
+    let dynamicTitleKey = null
+
+    if (location.pathname === '/admin-dashboard') {
+      dynamicTitleKey = 'titles.adminDashboard'
+    } else if (location.pathname.startsWith('/admin-dashboard/payments')) {
+      dynamicTitleKey = 'titles.adminPayments'
+    } else if (location.pathname.startsWith('/admin-dashboard/users')) {
+      dynamicTitleKey = 'titles.adminUsers'
+    } else if (location.pathname.startsWith('/admin-dashboard/settings')) {
+      dynamicTitleKey = 'titles.adminSettings'
+    }
+
     const pathToTitleKey = {
       '/': 'titles.home',
       '/login': 'titles.login',
@@ -55,7 +72,7 @@ function DocumentTitleManager() {
       '/contact': 'titles.contact',
     }
 
-    const pageTitle = t(pathToTitleKey[location.pathname] || 'titles.default')
+    const pageTitle = t(dynamicTitleKey || pathToTitleKey[location.pathname] || 'titles.default')
 
     document.title = `${pageTitle} | ${t('common.appName')}`
   }, [location.pathname, t])
@@ -89,6 +106,20 @@ function App() {
         <Route path="/terms" element={<TermsPage />} />
         <Route path="/privacy" element={<PrivacyPage />} />
         <Route path="/contact" element={<ContactPage />} />
+
+        <Route
+          path="/admin-dashboard"
+          element={
+            <AdminRoute>
+              <AdminLayout />
+            </AdminRoute>
+          }
+        >
+          <Route index element={<Navigate to="payments" replace />} />
+          <Route path="payments" element={<AdminPayments />} />
+          <Route path="users" element={<AdminUsers />} />
+          <Route path="settings" element={<AdminSettings />} />
+        </Route>
 
         <Route
           path="/dashboard"
