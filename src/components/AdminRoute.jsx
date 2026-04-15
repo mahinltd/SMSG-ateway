@@ -32,9 +32,12 @@ function AdminRoute({ children }) {
   }
 
   const payload = parseTokenPayload(token)
-  const role = resolveRole(payload)
+  const resolvedRole = resolveRole(payload)
 
-  if (role !== 'admin') {
+  console.log('Decoded Token Payload:', payload)
+  console.log('Resolved Role:', resolvedRole)
+
+  if (resolvedRole !== 'admin') {
     return <Navigate to="/" replace />
   }
 
