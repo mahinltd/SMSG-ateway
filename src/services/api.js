@@ -2,7 +2,7 @@
 import axios from 'axios'
 
 function normalizeApiBaseUrl(rawUrl) {
-  const fallback = 'https://smsgateway-0l0y.onrender.com/api'
+  const fallback = 'https://smsgateway-f3ay.onrender.com/api'
   const input = (rawUrl || fallback).trim()
 
   const withoutTrailingSlash = input.replace(/\/+$/, '')
