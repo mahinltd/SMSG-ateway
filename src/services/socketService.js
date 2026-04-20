@@ -2,7 +2,7 @@
 import { io } from 'socket.io-client'
 
 export function createSocketConnection(token) {
-  const socketBaseUrl = import.meta.env.VITE_SOCKET_URL || 'https://smsgateway-0l0y.onrender.com'
+  const socketBaseUrl = import.meta.env.VITE_SOCKET_URL || 'https://smsgateway-f3ay.onrender.com'
 
   return io(socketBaseUrl, {
     path: '/socket.io',
