@@ -1,5 +1,6 @@
 // ©2026 SMS GATEWAY Mahin Ltd Developed By Tanvir
 import { useEffect, useState } from 'react'
+import BroadcastEmail from '../components/BroadcastEmail'
 import LoadingSpinner from '../components/LoadingSpinner'
 import api from '../services/api'
 
@@ -220,6 +221,8 @@ function AdminSettings() {
           </form>
         )}
       </section>
+
+      <BroadcastEmail />
     </>
   )
 }
