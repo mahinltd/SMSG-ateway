@@ -6,7 +6,7 @@ export function createSocketConnection(token) {
 
   return io(socketBaseUrl, {
     path: '/socket.io',
-    transports: ['websocket', 'polling'],
+    transports: ['polling'],
     timeout: 10000,
     reconnection: true,
     reconnectionAttempts: 5,
