@@ -7,6 +7,36 @@ function isEmail(value) {
   return /@/.test(String(value || '').trim())
 }
 
+const emailTemplateReference = `
+<div style="text-align: center; padding: 20px;">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 108 108" width="80" height="80" style="display: block; margin: 0 auto;">
+    <defs>
+      <linearGradient id="bg" x1="0%" y1="100%" x2="100%" y2="0%">
+        <stop offset="0%" stop-color="#3B82F6" />
+        <stop offset="100%" stop-color="#22C55E" />
+      </linearGradient>
+    </defs>
+    <rect x="0" y="0" width="108" height="108" rx="24" fill="url(#bg)" />
+    <path fill="#FFFFFF" d="M34 36h40c3.3 0 6 2.7 6 6v24c0 3.3-2.7 6-6 6H46l-8 8v-8h-4c-3.3 0-6-2.7-6-6V42c0-3.3 2.7-6 6-6z" />
+    <path fill="#E2E8F0" d="M40 46h28v3H40zM40 54h18v3H40z" />
+    <circle cx="78" cy="66" r="10" fill="#22C55E" />
+    <path fill="#FFFFFF" d="M73 66l3 3 5-5 1.4 1.4-6.4 6.4-4.4-4.4z" />
+  </svg>
+  <h2 style="color: #3B82F6; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin-top: 10px;">SMS GATEWAY Mahin Ltd</h2>
+</div>
+
+<p>Hello, your account is now active.</p>
+
+<div style="margin-top: 24px; padding-top: 16px; border-top: 1px solid #E5E7EB; text-align: center; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-size: 13px; color: #6B7280;">
+  <p style="margin: 0 0 8px;">Useful links</p>
+  <p style="margin: 0;">
+    <a href="https://sms.mahinai.app/terms" style="color: #3B82F6; text-decoration: none; margin: 0 8px;">Terms &amp; Conditions</a>
+    <a href="https://sms.mahinai.app/privacy" style="color: #3B82F6; text-decoration: none; margin: 0 8px;">Privacy Policy</a>
+    <a href="https://sms.mahinai.app/contact" style="color: #3B82F6; text-decoration: none; margin: 0 8px;">Contact Us</a>
+  </p>
+</div>
+`.trim()
+
 function BroadcastEmail() {
   const [recipient, setRecipient] = useState('')
   const [subject, setSubject] = useState('')
@@ -64,6 +94,27 @@ function BroadcastEmail() {
         <p className="mt-2 text-sm text-slate-300">
           Send a professional one-to-one email to a user by user ID or email address.
         </p>
+      </div>
+
+      <div className="mb-5 rounded-xl border border-slate-700 bg-slate-900/60 p-4">
+        <div className="mb-3 flex items-center justify-between gap-3">
+          <div>
+            <p className="text-xs uppercase tracking-[0.18em] text-blue-300">HTML Reference</p>
+            <p className="mt-1 text-sm text-slate-300">
+              The backend should render the SVG header and legal links directly inside the final email template.
+            </p>
+          </div>
+          <span className="rounded-full border border-slate-600 px-3 py-1 text-xs text-slate-300">
+            Frontend safe preview only
+          </span>
+        </div>
+
+        <textarea
+          readOnly
+          value={emailTemplateReference}
+          rows={12}
+          className="w-full rounded-lg border border-slate-700 bg-slate-950 px-3 py-2 font-mono text-xs leading-5 text-slate-200 outline-none"
+        />
       </div>
 
       <form className="space-y-4" onSubmit={handleSubmit}>
