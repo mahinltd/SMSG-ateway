@@ -20,6 +20,15 @@ function normalizeSettings(payload) {
   return payload
 }
 
+function settingsToForm(settings) {
+  return {
+    bkashNumber: String(settings?.bkashNumber ?? settings?.bKashNumber ?? settings?.bkash_number ?? ''),
+    nagadNumber: String(settings?.nagadNumber ?? settings?.nagad_number ?? ''),
+    rocketNumber: String(settings?.rocketNumber ?? settings?.rocket_number ?? ''),
+    appPrice: String(settings?.appPrice ?? settings?.price ?? settings?.app_price ?? ''),
+  }
+}
+
 function AdminSettings() {
   const [form, setForm] = useState({
     bkashNumber: '',
@@ -40,12 +49,7 @@ function AdminSettings() {
       const response = await api.get('/admin/settings')
       const settings = normalizeSettings(response?.data?.data || response?.data)
 
-      setForm({
-        bkashNumber: String(settings?.bkashNumber ?? settings?.bKashNumber ?? ''),
-        nagadNumber: String(settings?.nagadNumber ?? ''),
-        rocketNumber: String(settings?.rocketNumber ?? ''),
-        appPrice: String(settings?.appPrice ?? ''),
-      })
+      setForm(settingsToForm(settings))
     } catch (requestError) {
       setError(
         requestError?.response?.data?.message ||
@@ -83,7 +87,12 @@ function AdminSettings() {
     }
 
     try {
-      await api.put('/admin/settings', payload)
+      const response = await api.put('/admin/settings', payload)
+      const updatedSettings = normalizeSettings(response?.data?.data || response?.data)
+      setForm((previous) => ({
+        ...previous,
+        ...settingsToForm(updatedSettings),
+      }))
       setSuccess('System settings updated successfully.')
     } catch (requestError) {
       setError(

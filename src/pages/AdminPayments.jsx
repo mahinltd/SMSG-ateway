@@ -1,6 +1,7 @@
 // ©2026 SMS GATEWAY Mahin Ltd Developed By Tanvir
 import { useEffect, useMemo, useState } from 'react'
 import LoadingSpinner from '../components/LoadingSpinner'
+import Skeleton from '../components/ui/Skeleton'
 import api from '../services/api'
 
 function normalizePayments(payload) {
@@ -38,7 +39,15 @@ function resolveUserName(payment) {
 }
 
 function resolvePhone(payment) {
-  return payment?.phone || payment?.phoneNumber || payment?.mobile || payment?.user?.phone || '-'
+  return (
+    payment?.phoneNumber ||
+    payment?.phone_number ||
+    payment?.senderNumber ||
+    payment?.phone ||
+    payment?.mobile ||
+    payment?.user?.phone ||
+    '-'
+  )
 }
 
 function resolveTrxId(payment) {
@@ -50,7 +59,7 @@ function resolveMethod(payment) {
 }
 
 function resolveAmount(payment) {
-  const amount = payment?.amount ?? payment?.total ?? payment?.price
+  const amount = payment?.amount ?? payment?.total ?? payment?.price ?? payment?.paymentAmount ?? payment?.paidAmount
   return amount === undefined || amount === null ? '-' : amount
 }
 
@@ -161,9 +170,24 @@ function AdminPayments() {
         ) : null}
 
         {isLoading ? (
-          <div className="flex items-center gap-2 py-8 text-slate-300">
-            <LoadingSpinner />
-            Loading payments...
+          <div className="space-y-3 py-4">
+            <div className="flex items-center gap-2 text-slate-300">
+              <LoadingSpinner />
+              Loading payments...
+            </div>
+            <div className="grid gap-3">
+              {[...Array(4)].map((_, index) => (
+                <div key={index} className="grid gap-3 rounded-xl border border-slate-700 bg-slate-900/60 p-4 md:grid-cols-7">
+                  <Skeleton height={14} />
+                  <Skeleton height={14} />
+                  <Skeleton height={14} />
+                  <Skeleton height={14} />
+                  <Skeleton height={14} />
+                  <Skeleton height={24} width="5rem" />
+                  <Skeleton height={32} width="8rem" />
+                </div>
+              ))}
+            </div>
           </div>
         ) : (
           <div className="overflow-x-auto">
