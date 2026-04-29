@@ -326,6 +326,22 @@ function MessagesPage() {
       )
     })
 
+    socket.on('messageStatusUpdated', (payload) => {
+      const payloadId = String(payload?.messageId || '')
+      const nextStatus = payload?.status || 'pending'
+
+      setMessages((previous) =>
+        previous.map((messageItem) =>
+          extractId(messageItem) === payloadId
+            ? {
+                ...messageItem,
+                status: nextStatus,
+              }
+            : messageItem,
+        ),
+      )
+    })
+
     socket.on('SMS_RECEIVED', (payload) => {
       const incoming = {
         ...payload,
