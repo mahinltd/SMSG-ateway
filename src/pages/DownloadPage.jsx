@@ -280,7 +280,7 @@ function DownloadPage() {
                 </p>
 
                 <a
-                  href="/app-release.apk"
+                  href="/sms%20geatway%20verson-1.1.0.apk"
                   download
                   className="mt-6 inline-flex items-center gap-2 rounded-lg bg-blue-600 px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-blue-900/40 transition hover:bg-blue-500"
                 >
