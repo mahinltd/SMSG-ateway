@@ -4,6 +4,14 @@
 @tailwind utilities;
 
 :root {
+  /* Color palette tokens */
+  --color-bg: #0B0E14; /* Deep Midnight Black */
+  --color-primary: #00D2FF; /* Neon Electric Blue */
+  --color-accent: #9D50BB; /* Vivid Purple */
+  --glass-bg: rgba(255,255,255,0.03);
+  --glass-border: rgba(255,255,255,0.06);
+  --glass-blur: 10px;
+  --card-radius: 14px;
   color-scheme: dark;
 }
 
@@ -12,7 +20,9 @@ html {
 }
 
 body {
-  @apply min-h-screen bg-slate-950 text-slate-100 antialiased;
+  @apply min-h-screen text-slate-100 antialiased;
+  background: var(--color-bg);
+  font-family: Inter, Outfit, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
   position: relative;
   overflow-x: hidden;
   background-image:

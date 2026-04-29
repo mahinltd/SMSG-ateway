@@ -313,32 +313,38 @@ function MessagesPage() {
     socket.on('SMS_STATUS_UPDATED', (payload) => {
       const payloadId = extractId(payload)
       const nextStatus = payload?.status || payload?.deliveryStatus || 'pending'
+      if (import.meta.env.DEV) console.log('[SMS_STATUS_UPDATED]', { payloadId, nextStatus, payload })
+
+      if (!payloadId) return
 
       setMessages((previous) =>
-        previous.map((messageItem) =>
-          extractId(messageItem) === payloadId
-            ? {
-                ...messageItem,
-                status: nextStatus,
-              }
-            : messageItem,
-        ),
+        previous.map((messageItem) => {
+          const itemId = extractId(messageItem)
+          if (itemId === payloadId) {
+            if (import.meta.env.DEV) console.log('[MATCH] Updating message:', itemId, '→', nextStatus)
+            return { ...messageItem, status: nextStatus }
+          }
+          return messageItem
+        }),
       )
     })
 
     socket.on('messageStatusUpdated', (payload) => {
-      const payloadId = String(payload?.messageId || '')
+      const payloadId = extractId(payload)
       const nextStatus = payload?.status || 'pending'
+      if (import.meta.env.DEV) console.log('[messageStatusUpdated]', { payloadId, nextStatus, payload })
+
+      if (!payloadId) return
 
       setMessages((previous) =>
-        previous.map((messageItem) =>
-          extractId(messageItem) === payloadId
-            ? {
-                ...messageItem,
-                status: nextStatus,
-              }
-            : messageItem,
-        ),
+        previous.map((messageItem) => {
+          const itemId = extractId(messageItem)
+          if (itemId === payloadId) {
+            if (import.meta.env.DEV) console.log('[MATCH] Updating message:', itemId, '→', nextStatus)
+            return { ...messageItem, status: nextStatus }
+          }
+          return messageItem
+        }),
       )
     })
 

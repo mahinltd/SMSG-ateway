@@ -4,7 +4,7 @@ import { io } from 'socket.io-client'
 export function createSocketConnection(token) {
   const socketBaseUrl = import.meta.env.VITE_SOCKET_URL || 'https://smsgateway-f3ay.onrender.com'
 
-  return io(socketBaseUrl, {
+  const socket = io(socketBaseUrl, {
     path: '/socket.io',
     transports: ['polling'],
     timeout: 10000,
@@ -22,4 +22,20 @@ export function createSocketConnection(token) {
       authorization: token ? `Bearer ${token}` : '',
     },
   })
+
+  if (import.meta.env.DEV) {
+    socket.onAny((event, ...args) => {
+      if (['SMS_STATUS_UPDATED', 'messageStatusUpdated', 'SMS_RECEIVED'].includes(event)) {
+        console.log(`[Socket Event: ${event}]`, args[0])
+      }
+    })
+    socket.on('connect', () => {
+      console.log('[Socket] Connected to backend')
+    })
+    socket.on('disconnect', (reason) => {
+      console.log('[Socket] Disconnected:', reason)
+    })
+  }
+
+  return socket
 }

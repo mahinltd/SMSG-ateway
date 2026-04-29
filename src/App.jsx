@@ -20,6 +20,7 @@ import MessagesPage from './pages/MessagesPage'
 import PrivacyPage from './pages/PrivacyPage'
 import RegisterPage from './pages/RegisterPage'
 import TermsPage from './pages/TermsPage'
+import DesignPreview from './pages/DesignPreview'
 
 function RedirectIfAuthenticated({ children }) {
   const { isAuthenticated } = useAuth()
@@ -144,6 +145,10 @@ function App() {
               <MessagesPage />
             </ProtectedRoute>
           }
+        />
+        <Route
+          path="/design-preview"
+          element={<DesignPreview />}
         />
         <Route
           path="/inbox"
