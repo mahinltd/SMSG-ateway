@@ -1,5 +1,5 @@
 // ©2026 SMS GATEWAY Mahin Ltd Developed By Tanvir
-import { BarChart3, Download, Inbox, LogOut, MessageSquare, Smartphone } from 'lucide-react'
+import { BadgeCheck, BarChart3, Download, Inbox, LogOut, MessageSquare, Smartphone } from 'lucide-react'
 import { Link, NavLink, useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import { useLanguage } from '../context/LanguageContext'
@@ -34,6 +34,11 @@ function Sidebar() {
       label: t('sidebar.downloadApp'),
       path: '/download',
       icon: Download,
+    },
+    {
+      label: 'Verify KYC',
+      path: '/dashboard/kyc',
+      icon: BadgeCheck,
     },
   ]
 
@@ -73,23 +78,27 @@ function Sidebar() {
       </div>
 
       <nav className="mt-6 space-y-2">
-        {navItems.map(({ label, path, icon: Icon }) => (
-          <NavLink
-            key={path}
-            to={path}
-            end={path === '/'}
-            className={({ isActive }) =>
-              `flex w-full items-center gap-2 rounded-lg px-3 py-2 text-left text-sm font-medium transition ${
-                isActive
-                  ? 'bg-blue-600 text-white shadow-lg shadow-blue-900/40'
-                  : 'text-slate-300 hover:bg-slate-700'
-              }`
-            }
-          >
-            <Icon size={16} />
-            {label}
-          </NavLink>
-        ))}
+        {navItems.map(({ label, path, icon }) => {
+          const NavIcon = icon
+
+          return (
+            <NavLink
+              key={path}
+              to={path}
+              end={path === '/'}
+              className={({ isActive }) =>
+                `flex w-full items-center gap-2 rounded-lg px-3 py-2 text-left text-sm font-medium transition ${
+                  isActive
+                    ? 'bg-blue-600 text-white shadow-lg shadow-blue-900/40'
+                    : 'text-slate-300 hover:bg-slate-700'
+                }`
+              }
+            >
+              <NavIcon size={16} />
+              {label}
+            </NavLink>
+          )
+        })}
       </nav>
 
       <button

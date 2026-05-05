@@ -17,6 +17,7 @@ import ContactPage from './pages/ContactPage'
 import InboxPage from './pages/InboxPage'
 import LoginPage from './pages/LoginPage'
 import MessagesPage from './pages/MessagesPage'
+import KycVerification from './pages/KycVerification'
 import PrivacyPage from './pages/PrivacyPage'
 import RegisterPage from './pages/RegisterPage'
 import TermsPage from './pages/TermsPage'
@@ -64,6 +65,7 @@ function DocumentTitleManager() {
       '/login': 'titles.login',
       '/register': 'titles.register',
       '/dashboard': 'titles.dashboard',
+      '/dashboard/kyc': 'titles.kycVerification',
       '/devices': 'titles.devices',
       '/messages': 'titles.messages',
       '/inbox': 'titles.inbox',
@@ -127,6 +129,14 @@ function App() {
           element={
             <ProtectedRoute>
               <DashboardPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/dashboard/kyc"
+          element={
+            <ProtectedRoute>
+              <KycVerification />
             </ProtectedRoute>
           }
         />
