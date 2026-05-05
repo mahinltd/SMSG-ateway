@@ -1,5 +1,6 @@
 // ©2026 SMS GATEWAY Mahin Ltd develop by (Tanvir)
 import { useEffect, useState } from 'react'
+import { CheckCircle2, Clock3 } from 'lucide-react'
 import LoadingSpinner from '../components/LoadingSpinner'
 import Sidebar from '../components/Sidebar'
 import api from '../services/api'
@@ -36,15 +37,15 @@ function KycVerification() {
     try {
       const response = await api.get('/kyc/status')
       const payload = response?.data?.data || response?.data || {}
-      const kycStatus = String(payload?.kycStatus || payload?.status || '').toLowerCase()
+      const kycStatus = String(payload?.user?.kycStatus || payload?.kycStatus || '').toLowerCase()
 
       if (['pending', 'approved'].includes(kycStatus)) {
         setStatus(kycStatus)
       } else {
-        setStatus('form')
+        setStatus('unverified')
       }
     } catch (requestError) {
-      setStatus('form')
+      setStatus('unverified')
       setError(
         requestError?.response?.data?.message ||
           requestError?.response?.data?.error ||
@@ -110,18 +111,21 @@ function KycVerification() {
 
   const statusMeta = {
     pending: {
-      title: 'KYC Pending',
-      description: 'Your verification is under review. The form is hidden while the request is pending.',
+      title: 'Verification Pending!',
+      description: 'Your documents are currently under review by the admin. Please wait for approval.',
       badge: 'border-amber-500/30 bg-amber-500/10 text-amber-200',
+      icon: Clock3,
     },
     approved: {
-      title: 'KYC Approved',
-      description: 'Your account is fully verified. The KYC form is no longer required.',
+      title: 'Verification Successful!',
+      description: 'Your KYC is Approved. You can now use all features of the SMS Gateway.',
       badge: 'border-emerald-500/30 bg-emerald-500/10 text-emerald-200',
+      icon: CheckCircle2,
     },
   }
 
   const activeStatus = statusMeta[status]
+  const showForm = ['form', 'unverified'].includes(status)
 
   return (
     <main className="min-h-screen px-4 py-6 md:px-6">
@@ -146,22 +150,29 @@ function KycVerification() {
             </div>
           ) : null}
 
-          {!isLoading && activeStatus ? (
-            <article className="rounded-2xl border border-slate-700/80 bg-slate-800/90 p-6 shadow-xl shadow-blue-950/20 backdrop-blur">
-              <div className={`inline-flex rounded-full border px-3 py-1 text-xs font-semibold uppercase tracking-[0.12em] ${activeStatus.badge}`}>
-                {activeStatus.title}
+          {!isLoading && status === 'approved' && activeStatus ? (
+            <article className="rounded-2xl border border-emerald-500/30 bg-emerald-500/10 p-6 shadow-xl shadow-emerald-950/20 backdrop-blur">
+              <div className={`inline-flex items-center gap-2 rounded-full border px-3 py-1 text-xs font-semibold uppercase tracking-[0.12em] ${activeStatus.badge}`}>
+                <activeStatus.icon size={14} />
+                Approved
               </div>
-              <h3 className="mt-4 text-2xl font-semibold text-white">{activeStatus.title}</h3>
-              <p className="mt-2 max-w-2xl text-slate-300">{activeStatus.description}</p>
-              {success ? (
-                <p className="mt-4 rounded-lg border border-blue-500/30 bg-blue-500/10 px-3 py-2 text-sm text-blue-200">
-                  {success}
-                </p>
-              ) : null}
+              <h3 className="mt-4 text-2xl font-semibold text-emerald-100">{activeStatus.title}</h3>
+              <p className="mt-2 max-w-2xl text-emerald-50/90">{activeStatus.description}</p>
             </article>
           ) : null}
 
-          {!isLoading && !activeStatus ? (
+          {!isLoading && status === 'pending' && activeStatus ? (
+            <article className="rounded-2xl border border-amber-500/30 bg-amber-500/10 p-6 shadow-xl shadow-amber-950/20 backdrop-blur">
+              <div className={`inline-flex items-center gap-2 rounded-full border px-3 py-1 text-xs font-semibold uppercase tracking-[0.12em] ${activeStatus.badge}`}>
+                <activeStatus.icon size={14} />
+                Pending
+              </div>
+              <h3 className="mt-4 text-2xl font-semibold text-amber-100">{activeStatus.title}</h3>
+              <p className="mt-2 max-w-2xl text-amber-50/90">{activeStatus.description}</p>
+            </article>
+          ) : null}
+
+          {!isLoading && showForm ? (
             <article className="rounded-2xl border border-slate-700/80 bg-slate-800/90 p-6 shadow-xl shadow-blue-950/20 backdrop-blur">
               <h3 className="text-lg font-semibold text-white">Submit KYC Documents</h3>
               <p className="mt-2 text-sm text-slate-300">
