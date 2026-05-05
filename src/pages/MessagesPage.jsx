@@ -1,6 +1,7 @@
 // ©2026 SMS GATEWAY Mahin Ltd Developed By Tanvir
 import { useEffect, useMemo, useState } from 'react'
 import { Trash2 } from 'lucide-react'
+import DOMPurify from 'dompurify'
 import LoadingSpinner from '../components/LoadingSpinner'
 import MessageDetailsModal from '../components/MessageDetailsModal'
 import Sidebar from '../components/Sidebar'
@@ -389,15 +390,17 @@ function MessagesPage() {
     })
 
     try {
+      const safeMessage = DOMPurify.sanitize(form.message)
+
       const payload = {
         device_id: form.deviceId,
         phone_number: form.phoneNumber.trim(),
-        message_body: form.message.trim(),
+        message_body: safeMessage.trim(),
         deviceId: form.deviceId,
         phoneNumber: form.phoneNumber.trim(),
         to: form.phoneNumber.trim(),
-        message: form.message.trim(),
-        body: form.message.trim(),
+        message: safeMessage.trim(),
+        body: safeMessage.trim(),
       }
 
       const response = await api.post('/messages/send', payload)
