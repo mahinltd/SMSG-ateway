@@ -9,6 +9,7 @@ import AdminLayout from './layouts/AdminLayout'
 import AdminPayments from './pages/AdminPayments'
 import AdminSettings from './pages/AdminSettings'
 import AdminUsers from './pages/AdminUsers'
+import KycManagement from './pages/admin/KycManagement'
 import LandingPage from './pages/LandingPage'
 import DownloadPage from './pages/DownloadPage'
 import DashboardPage from './pages/DashboardPage'
@@ -122,6 +123,18 @@ function App() {
           <Route path="payments" element={<AdminPayments />} />
           <Route path="users" element={<AdminUsers />} />
           <Route path="settings" element={<AdminSettings />} />
+        </Route>
+
+        <Route
+          path="/admin"
+          element={
+            <AdminRoute>
+              <AdminLayout />
+            </AdminRoute>
+          }
+        >
+          <Route index element={<Navigate to="kyc" replace />} />
+          <Route path="kyc" element={<KycManagement />} />
         </Route>
 
         <Route

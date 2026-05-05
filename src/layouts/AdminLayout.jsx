@@ -1,5 +1,5 @@
 // ©2026 SMS GATEWAY Mahin Ltd Developed By Tanvir
-import { CreditCard, LogOut, Settings, Shield, Users } from 'lucide-react'
+import { BadgeCheck, CreditCard, LogOut, Settings, Shield, Users } from 'lucide-react'
 import { NavLink, Outlet, useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 
@@ -18,6 +18,11 @@ const adminLinks = [
     label: 'Settings',
     path: '/admin-dashboard/settings',
     icon: Settings,
+  },
+  {
+    label: 'KYC Requests',
+    path: '/admin/kyc',
+    icon: BadgeCheck,
   },
 ]
 
@@ -42,22 +47,26 @@ function AdminLayout() {
           <p className="mt-1 text-sm text-slate-300">Manage platform users, payments, and configuration.</p>
 
           <nav className="mt-6 space-y-2">
-            {adminLinks.map(({ label, path, icon: Icon }) => (
-              <NavLink
-                key={path}
-                to={path}
-                className={({ isActive }) =>
-                  `flex w-full items-center gap-2 rounded-lg px-3 py-2 text-left text-sm font-medium transition ${
-                    isActive
-                      ? 'bg-blue-600 text-white shadow-lg shadow-blue-900/40'
-                      : 'text-slate-300 hover:bg-slate-700'
-                  }`
-                }
-              >
-                <Icon size={16} />
-                {label}
-              </NavLink>
-            ))}
+            {adminLinks.map(({ label, path, icon }) => {
+              const NavIcon = icon
+
+              return (
+                <NavLink
+                  key={path}
+                  to={path}
+                  className={({ isActive }) =>
+                    `flex w-full items-center gap-2 rounded-lg px-3 py-2 text-left text-sm font-medium transition ${
+                      isActive
+                        ? 'bg-blue-600 text-white shadow-lg shadow-blue-900/40'
+                        : 'text-slate-300 hover:bg-slate-700'
+                    }`
+                  }
+                >
+                  <NavIcon size={16} />
+                  {label}
+                </NavLink>
+              )
+            })}
           </nav>
 
           <button
