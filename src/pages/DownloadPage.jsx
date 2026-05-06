@@ -281,7 +281,7 @@ function DownloadPage() {
 
                 <a
                   href="/mahin-sms-gateway.apk"
-                  download="Mahin_SMS_Gateway_v1.0.apk"
+                  download="Mahin_SMS_Gateway_v1.1.1.apk"
                   className="flex w-full items-center justify-center gap-2 rounded-lg bg-gradient-to-r from-blue-600 to-indigo-600 px-8 py-4 text-lg font-bold text-white shadow-lg shadow-blue-500/30 transition-all hover:scale-105 hover:from-blue-500 hover:to-indigo-500"
                 >
                   <Download className="h-6 w-6" />
