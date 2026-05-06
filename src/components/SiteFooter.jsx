@@ -12,6 +12,9 @@ function SiteFooter() {
           ©2026 SMS GATEWAY Mahin Ltd Developed By Tanvir
         </p>
         <div className="flex flex-wrap gap-x-4 gap-y-2">
+          <Link to="/about" className="transition hover:text-blue-300">
+            About
+          </Link>
           <Link to="/privacy" className="transition hover:text-blue-300">
             {t('footer.privacy')}
           </Link>

@@ -1,59 +1,35 @@
-// ©2026 SMS GATEWAY Mahin Ltd Developed By Tanvir
-import { Link } from 'react-router-dom'
-
+// ©2026 SMS GATEWAY Mahin Ltd develop by (Tanvir)
 function PrivacyPage() {
   return (
-    <main className="min-h-screen px-4 py-8 md:px-6 md:py-10">
-      <section className="mx-auto w-full max-w-4xl rounded-3xl border border-slate-700/80 bg-slate-800/90 p-6 shadow-2xl shadow-blue-950/30 backdrop-blur md:p-10">
-        <p className="text-sm uppercase tracking-[0.2em] text-blue-300">Legal</p>
-        <h1 className="mt-2 text-3xl font-semibold text-white md:text-4xl">Privacy Policy</h1>
-        <p className="mt-4 text-sm leading-7 text-slate-300 md:text-base md:leading-8">
-          This Privacy Policy is a professional placeholder describing how SMS Gateway may collect,
-          use, store, and protect user information. Final legal text should be reviewed and updated
-          before public release.
+    <main className="min-h-screen px-4 py-8 md:px-6">
+      <section className="mx-auto w-full max-w-5xl rounded-3xl border border-slate-700/80 bg-gradient-to-br from-slate-950 via-slate-900 to-blue-950 px-6 py-8 shadow-2xl shadow-blue-950/30 backdrop-blur md:px-10 md:py-12">
+        <p className="text-sm uppercase tracking-[0.28em] text-blue-300">Privacy Policy</p>
+        <h1 className="mt-3 text-4xl font-black tracking-tight text-white md:text-5xl">
+          Privacy and data protection
+        </h1>
+        <p className="mt-5 max-w-4xl text-base leading-8 text-slate-300 md:text-lg">
+          At Mahin Ltd, your privacy is our priority. The Mahin AI SMS Gateway Android Application requires 'SEND_SMS'
+          and 'Background Processing' permissions strictly to function as a personal SMS routing gateway for your own
+          messages. We NEVER read your personal inbox, nor do we sell or share your data with third parties. All
+          communications are securely synced between your dashboard and your device.
         </p>
 
-        <div className="mt-8 space-y-6 text-sm leading-7 text-slate-300 md:text-base md:leading-8">
-          <section>
-            <h2 className="text-lg font-semibold text-white">Information We Collect</h2>
-            <p className="mt-2">
-              We may collect account details, device metadata, message history, and technical
-              diagnostics required to deliver and improve the service.
+        <div className="mt-8 grid gap-6 md:grid-cols-2">
+          <article className="rounded-2xl border border-slate-700 bg-slate-900/70 p-6">
+            <h2 className="text-2xl font-semibold text-white">Permissions we use</h2>
+            <p className="mt-3 text-sm leading-7 text-slate-300">
+              We only request permissions required to route messages from your own Android device and keep the gateway
+              connected in the background.
             </p>
-          </section>
+          </article>
 
-          <section>
-            <h2 className="text-lg font-semibold text-white">How We Use Information</h2>
-            <p className="mt-2">
-              Information is used to operate the dashboard, synchronize devices, provide support,
-              and maintain the security and reliability of the platform.
+          <article className="rounded-2xl border border-slate-700 bg-slate-900/70 p-6">
+            <h2 className="text-2xl font-semibold text-white">How data is handled</h2>
+            <p className="mt-3 text-sm leading-7 text-slate-300">
+              Messages and sync data are handled to support your dashboard workflow and are not sold, shared, or read
+              for unrelated purposes.
             </p>
-          </section>
-
-          <section>
-            <h2 className="text-lg font-semibold text-white">Data Protection</h2>
-            <p className="mt-2">
-              We apply reasonable administrative and technical safeguards to protect personal data
-              and service records from unauthorized access or misuse.
-            </p>
-          </section>
-
-          <section>
-            <h2 className="text-lg font-semibold text-white">Your Choices</h2>
-            <p className="mt-2">
-              You may contact our support team regarding data access, corrections, or privacy-related
-              questions at any time.
-            </p>
-          </section>
-        </div>
-
-        <div className="mt-10 flex flex-wrap gap-3 border-t border-slate-700 pt-6">
-          <Link to="/contact" className="rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-blue-500">
-            Contact Us
-          </Link>
-          <Link to="/terms" className="rounded-lg border border-slate-600 px-4 py-2 text-sm font-semibold text-slate-200 transition hover:bg-slate-700">
-            Terms &amp; Conditions
-          </Link>
+          </article>
         </div>
       </section>
     </main>

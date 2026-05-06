@@ -11,6 +11,7 @@ import AdminSettings from './pages/AdminSettings'
 import AdminUsers from './pages/AdminUsers'
 import KycManagement from './pages/admin/KycManagement'
 import LandingPage from './pages/LandingPage'
+import AboutPage from './pages/AboutPage'
 import DownloadPage from './pages/DownloadPage'
 import DashboardPage from './pages/DashboardPage'
 import DevicesPage from './pages/DevicesPage'
@@ -67,6 +68,7 @@ function DocumentTitleManager() {
 
     const pathToTitleKey = {
       '/': 'titles.home',
+      '/about': 'titles.about',
       '/login': 'titles.login',
       '/forgot-password': 'titles.login',
       '/reset-password': 'titles.login',
@@ -96,6 +98,7 @@ function App() {
       <DocumentTitleManager />
       <Routes>
         <Route path="/" element={<HomeRoute />} />
+        <Route path="/about" element={<AboutPage />} />
         <Route
           path="/login"
           element={
