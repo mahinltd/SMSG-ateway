@@ -280,12 +280,12 @@ function DownloadPage() {
                 </p>
 
                 <a
-                  href="/sms%20geatway%20verson-1.1.0.apk"
-                  download
-                  className="mt-6 inline-flex items-center gap-2 rounded-lg bg-blue-600 px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-blue-900/40 transition hover:bg-blue-500"
+                  href="/mahin-sms-gateway.apk"
+                  download="Mahin_SMS_Gateway_v1.0.apk"
+                  className="flex w-full items-center justify-center gap-2 rounded-lg bg-gradient-to-r from-blue-600 to-indigo-600 px-8 py-4 text-lg font-bold text-white shadow-lg shadow-blue-500/30 transition-all hover:scale-105 hover:from-blue-500 hover:to-indigo-500"
                 >
-                  <Download size={18} />
-                  {t('download.downloadApk')}
+                  <Download className="h-6 w-6" />
+                  Download APK File
                 </a>
               </>
             ) : (
