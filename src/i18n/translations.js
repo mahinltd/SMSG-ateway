@@ -125,6 +125,59 @@ export const translations = {
       beforeInstallDescription:
         'Ensure your Android phone has internet access and permission to send SMS. After installing, open the app, pair it with your dashboard account, and begin managing outbound messages from one central place.',
     },
+    about: {
+      title: 'About Mahin Ltd',
+      heading: 'Mahin AI SMS Gateway',
+      description:
+        'Mahin Ltd (mahinltd.tech) is a forward-thinking technology company based in Bangladesh. Our flagship product, Mahin AI SMS Gateway, empowers businesses to transform their Android devices into robust, real-time SMS delivery systems.',
+      whatWeBuilt: 'What we build',
+      infrastructure: 'Reliable communication infrastructure',
+      infrastructureDesc:
+        'We focus on performance, transparency, and automation for teams that need dependable messaging across Android devices, dashboards, and live operations.',
+      whyMatters: 'Why it matters',
+      builtForSpeed: 'Built for speed and control',
+      speedDesc:
+        'Mahin AI SMS Gateway is designed to help organizations route messages in real time with clarity, operational control, and a smooth user experience.',
+    },
+    privacy: {
+      title: 'Privacy and data protection',
+      badge: 'Privacy Policy',
+      description:
+        'At Mahin Ltd, your privacy is our priority. The Mahin AI SMS Gateway Android Application requires "SEND_SMS" and "Background Processing" permissions strictly to function as a personal SMS routing gateway for your own messages. We NEVER read your personal inbox, nor do we sell or share your data with third parties. All communications are securely synced between your dashboard and your device.',
+      permissions: 'Permissions we use',
+      permissionsDesc:
+        'We only request permissions required to route messages from your own Android device and keep the gateway connected in the background.',
+      handling: 'How data is handled',
+      handlingDesc:
+        'Messages and sync data are handled to support your dashboard workflow and are not sold, shared, or read for unrelated purposes.',
+    },
+    terms: {
+      badge: 'Terms of Service',
+      title: 'Platform terms and usage rules',
+      intro:
+        'These terms govern your access to and use of Mahin AI SMS Gateway, including any dashboard, Android client, and related services provided by Mahin Ltd.',
+      acceptable: 'Acceptable use',
+      acceptableDesc:
+        'You agree to use the service only for lawful business or personal communications, to maintain accurate account information, and to protect your login credentials.',
+      compliance: 'Telecom compliance',
+      complianceDesc:
+        'Users must comply with all applicable local, national, and international telecom laws, carrier policies, and anti-spam regulations when sending bulk SMS or any other message traffic through the platform.',
+      limits: 'Service limits',
+      limitsDesc:
+        'Mahin Ltd may suspend or restrict access if usage threatens service stability, violates these terms, or appears to involve abuse, fraud, or unlawful activity.',
+    },
+    contact: {
+      badge: 'Support',
+      title: 'Contact Us',
+      description:
+        'Reach out to the SMS Gateway team through the official channels below. Each method opens in a new tab and is styled for quick access in a premium dashboard experience.',
+      email: 'Email',
+      emailValue: 'info.mahin.ltd@gmail.com',
+      facebook: 'Facebook',
+      facebookValue: 'facebook.com/tanvir8268',
+      github: 'GitHub',
+      githubValue: 'github.com/mahinltd',
+    },
     footer: {
       privacy: 'Privacy Policy',
       terms: 'Terms & Conditions',
@@ -255,8 +308,59 @@ export const translations = {
       beforeInstall: 'ইনস্টল করার আগে',
       beforeInstallDescription:
         'আপনার Android ফোনে ইন্টারনেট এবং SMS পাঠানোর অনুমতি আছে কিনা নিশ্চিত করুন। ইনস্টল শেষে অ্যাপ খুলে ড্যাশবোর্ড অ্যাকাউন্টের সাথে পেয়ার করুন।',
+    },    about: {
+      title: 'Mahin Ltd সম্পর্কে',
+      heading: 'Mahin AI SMS Gateway',
+      description:
+        'Mahin Ltd (mahinltd.tech) হল বাংলাদেশে অবস্থিত একটি অগ্রগামী প্রযুক্তি কোম্পানি। আমাদের ফ্ল্যাগশিপ পণ্য Mahin AI SMS Gateway ব্যবসায়িকদের তাদের Android ডিভাইসকে শক্তিশালী, রিয়েল-টাইম SMS ডেলিভারি সিস্টেমে রূপান্তরিত করতে সক্ষম করে।',
+      whatWeBuilt: 'আমরা কী তৈরি করি',
+      infrastructure: 'নির্ভরযোগ্য যোগাযোগ অবকাঠামো',
+      infrastructureDesc:
+        'আমরা পারফরম্যান্স, স্বচ্ছতা এবং স্বয়ংক্রিয়করণে ফোকাস করি এমন দলগুলির জন্য যারা Android ডিভাইস, ড্যাশবোর্ড এবং লাইভ অপারেশন জুড়ে নির্ভরযোগ্য মেসেজিং প্রয়োজন।',
+      whyMatters: 'কেন এটি গুরুত্বপূর্ণ',
+      builtForSpeed: 'গতি এবং নিয়ন্ত্রণের জন্য নির্মিত',
+      speedDesc:
+        'Mahin AI SMS Gateway সংস্থাগুলিকে স্পষ্টতা, পরিচালনামূলক নিয়ন্ত্রণ এবং মসৃণ ব্যবহারকারী অভিজ্ঞতার সাথে রিয়েল-টাইমে মেসেজ রুট করতে সহায়তা করার জন্য ডিজাইন করা হয়েছে।',
     },
-    footer: {
+    privacy: {
+      title: 'গোপনীয়তা এবং ডেটা সুরক্ষা',
+      badge: 'প্রাইভেসি পলিসি',
+      description:
+        'Mahin Ltd-এ আপনার গোপনীয়তা আমাদের অগ্রাধিকার। Mahin AI SMS Gateway Android অ্যাপ্লিকেশন "SEND_SMS" এবং "Background Processing" অনুমতি শুধুমাত্র আপনার নিজের মেসেজের জন্য একটি ব্যক্তিগত SMS রুটিং গেটওয়ে হিসেবে কাজ করার জন্য প্রয়োজন। আমরা কখনই আপনার ব্যক্তিগত ইনবক্স পড়ি না, এবং আমরা আপনার ডেটা তৃতীয় পক্ষের সাথে বিক্রয় বা ভাগ করি না। সমস্ত যোগাযোগ আপনার ড্যাশবোর্ড এবং আপনার ডিভাইসের মধ্যে নিরাপদে সিঙ্ক করা হয়।',
+      permissions: 'আমরা যে অনুমতি ব্যবহার করি',
+      permissionsDesc:
+        'আমরা শুধুমাত্র আপনার নিজের Android ডিভাইস থেকে মেসেজ রুট করতে এবং গেটওয়ে পটভূমিতে সংযুক্ত রাখতে প্রয়োজনীয় অনুমতি অনুরোধ করি।',
+      handling: 'ডেটা কীভাবে পরিচালনা করা হয়',
+      handlingDesc:
+        'মেসেজ এবং সিঙ্ক ডেটা আপনার ড্যাশবোর্ড ওয়ার্কফ্লো সমর্থন করার জন্য পরিচালনা করা হয় এবং বিক্রয়, ভাগ বা অসম্পর্কিত উদ্দেশ্যে পড়া হয় না।',
+    },
+    terms: {
+      badge: 'সেবা শর্তাবলী',
+      title: 'প্ল্যাটফর্ম শর্তাবলী এবং ব্যবহারের নিয়মাবলী',
+      intro:
+        'এই শর্তাবলী Mahin AI SMS Gateway-এ এবং Mahin Ltd দ্বারা প্রদত্ত যেকোনো ড্যাশবোর্ড, Android ক্লায়েন্ট এবং সম্পর্কিত সেবার অ্যাক্সেস এবং ব্যবহার নিয়ন্ত্রণ করে।',
+      acceptable: 'গ্রহণযোগ্য ব্যবহার',
+      acceptableDesc:
+        'আপনি সেবা শুধুমাত্র আইনি ব্যবসায়িক বা ব্যক্তিগত যোগাযোগের জন্য ব্যবহার করতে, সঠিক অ্যাকাউন্ট তথ্য বজায় রাখতে এবং আপনার লগইন শংসাপত্র রক্ষা করতে সম্মত হন।',
+      compliance: 'টেলিকম সম্মতি',
+      complianceDesc:
+        'প্ল্যাটফর্মের মাধ্যমে বাল্ক SMS বা অন্য যেকোনো মেসেজ ট্রাফিক পাঠানোর সময় ব্যবহারকারীদের অবশ্যই সমস্ত প্রযোজ্য স্থানীয়, জাতীয় এবং আন্তর্জাতিক টেলিকম আইন, বাহক নীতি এবং স্প্যাম বিরোধী নিয়মাবলী মেনে চলতে হবে।',
+      limits: 'সেবা সীমাবদ্ধতা',
+      limitsDesc:
+        'যদি ব্যবহার সেবার স্থিতিশীলতা হুমকির সম্মুখীন করে, এই শর্তাবলী লঙ্ঘন করে, বা অপব্যবহার, জালিয়াতি বা অবৈধ কার্যকলাপ জড়িত থাকে, তাহলে Mahin Ltd অ্যাক্সেস স্থগিত বা সীমাবদ্ধ করতে পারে।',
+    },
+    contact: {
+      badge: 'সহায়তা',
+      title: 'আমাদের সাথে যোগাযোগ করুন',
+      description:
+        'নীচের অফিসিয়াল চ্যানেলের মাধ্যমে SMS Gateway টিমের কাছে পৌঁছান। প্রতিটি পদ্ধতি নতুন ট্যাবে খোলে এবং একটি প্রিমিয়াম ড্যাশবোর্ড অভিজ্ঞতায় দ্রুত অ্যাক্সেসের জন্য স্টাইল করা হয়েছে।',
+      email: 'ইমেইল',
+      emailValue: 'info.mahin.ltd@gmail.com',
+      facebook: 'ফেসবুক',
+      facebookValue: 'facebook.com/tanvir8268',
+      github: 'গিটহাব',
+      githubValue: 'github.com/mahinltd',
+    },    footer: {
       privacy: 'প্রাইভেসি পলিসি',
       terms: 'শর্তাবলি',
       contact: 'যোগাযোগ করুন',

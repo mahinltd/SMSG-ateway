@@ -1,42 +1,44 @@
 // ©2026 SMS GATEWAY Mahin Ltd Developed By Tanvir
 import { Code2, Globe, Mail } from 'lucide-react'
-
-const contactLinks = [
-  {
-    label: 'Email',
-    value: 'info.mahin.ltd@gmail.com',
-    href: 'mailto:info.mahin.ltd@gmail.com',
-    icon: Mail,
-  },
-  {
-    label: 'Facebook',
-    value: 'facebook.com/tanvir8268',
-    href: 'https://www.facebook.com/tanvir8268',
-    icon: Globe,
-  },
-  {
-    label: 'GitHub',
-    value: 'github.com/mahinltd',
-    href: 'https://www.github.com/mahinltd',
-    icon: Code2,
-  },
-]
+import { useLanguage } from '../context/LanguageContext'
 
 function ContactPage() {
+  const { t } = useLanguage()
+
+  const contactLinks = [
+    {
+      labelKey: 'contact.email',
+      valueKey: 'contact.emailValue',
+      href: `mailto:${t('contact.emailValue')}`,
+      icon: Mail,
+    },
+    {
+      labelKey: 'contact.facebook',
+      valueKey: 'contact.facebookValue',
+      href: 'https://www.facebook.com/tanvir8268',
+      icon: Globe,
+    },
+    {
+      labelKey: 'contact.github',
+      valueKey: 'contact.githubValue',
+      href: 'https://www.github.com/mahinltd',
+      icon: Code2,
+    },
+  ]
+
   return (
     <main className="min-h-screen px-4 py-8 md:px-6 md:py-10">
       <section className="mx-auto w-full max-w-4xl rounded-3xl border border-slate-700/80 bg-slate-800/90 p-6 shadow-2xl shadow-blue-950/30 backdrop-blur md:p-10">
-        <p className="text-sm uppercase tracking-[0.2em] text-blue-300">Support</p>
-        <h1 className="mt-2 text-3xl font-semibold text-white md:text-4xl">Contact Us</h1>
+        <p className="text-sm uppercase tracking-[0.2em] text-blue-300">{t('contact.badge')}</p>
+        <h1 className="mt-2 text-3xl font-semibold text-white md:text-4xl">{t('contact.title')}</h1>
         <p className="mt-4 max-w-2xl text-sm leading-7 text-slate-300 md:text-base md:leading-8">
-          Reach out to the SMS Gateway team through the official channels below. Each method opens
-          in a new tab and is styled for quick access in a premium dashboard experience.
+          {t('contact.description')}
         </p>
 
         <div className="mt-8 grid gap-4 md:grid-cols-3">
-          {contactLinks.map(({ label, value, href, icon: Icon }) => (
+          {contactLinks.map(({ labelKey, valueKey, href, icon: Icon }) => (
             <a
-              key={label}
+              key={labelKey}
               href={href}
               target="_blank"
               rel="noopener noreferrer"
@@ -47,9 +49,9 @@ function ContactPage() {
                   <Icon size={20} />
                 </span>
                 <div>
-                  <p className="text-xs uppercase tracking-[0.2em] text-slate-400">{label}</p>
+                  <p className="text-xs uppercase tracking-[0.2em] text-slate-400">{t(labelKey)}</p>
                   <p className="mt-1 break-words text-sm font-medium text-white transition group-hover:text-blue-200">
-                    {value}
+                    {t(valueKey)}
                   </p>
                 </div>
               </div>

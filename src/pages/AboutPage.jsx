@@ -1,36 +1,36 @@
 // ©2026 SMS GATEWAY Mahin Ltd develop by (Tanvir)
+import { useLanguage } from '../context/LanguageContext'
+
 function AboutPage() {
+  const { t } = useLanguage()
+
   return (
     <main className="min-h-screen px-4 py-8 md:px-6">
       <section className="mx-auto w-full max-w-5xl overflow-hidden rounded-3xl border border-slate-700/80 bg-gradient-to-br from-slate-950 via-slate-900 to-blue-950 shadow-2xl shadow-blue-950/30 backdrop-blur">
         <div className="border-b border-white/10 px-6 py-8 md:px-10 md:py-12">
-          <p className="text-sm uppercase tracking-[0.28em] text-blue-300">About Mahin Ltd</p>
+          <p className="text-sm uppercase tracking-[0.28em] text-blue-300">{t('about.title')}</p>
           <h1 className="mt-3 text-4xl font-black tracking-tight text-white md:text-5xl">
-            Mahin AI SMS Gateway
+            {t('about.heading')}
           </h1>
           <p className="mt-4 max-w-3xl text-base leading-8 text-slate-300 md:text-lg">
-            Mahin Ltd (mahinltd.tech) is a forward-thinking technology company based in Bangladesh. Our flagship
-            product, Mahin AI SMS Gateway, empowers businesses to transform their Android devices into robust,
-            real-time SMS delivery systems.
+            {t('about.description')}
           </p>
         </div>
 
         <div className="grid gap-6 px-6 py-8 md:grid-cols-2 md:px-10 md:py-12">
           <article className="rounded-2xl border border-slate-700 bg-slate-900/70 p-6">
-            <p className="text-xs uppercase tracking-[0.2em] text-blue-300">What we build</p>
-            <h2 className="mt-3 text-2xl font-semibold text-white">Reliable communication infrastructure</h2>
+            <p className="text-xs uppercase tracking-[0.2em] text-blue-300">{t('about.whatWeBuilt')}</p>
+            <h2 className="mt-3 text-2xl font-semibold text-white">{t('about.infrastructure')}</h2>
             <p className="mt-3 text-sm leading-7 text-slate-300">
-              We focus on performance, transparency, and automation for teams that need dependable messaging across
-              Android devices, dashboards, and live operations.
+              {t('about.infrastructureDesc')}
             </p>
           </article>
 
           <article className="rounded-2xl border border-slate-700 bg-slate-900/70 p-6">
-            <p className="text-xs uppercase tracking-[0.2em] text-blue-300">Why it matters</p>
-            <h2 className="mt-3 text-2xl font-semibold text-white">Built for speed and control</h2>
+            <p className="text-xs uppercase tracking-[0.2em] text-blue-300">{t('about.whyMatters')}</p>
+            <h2 className="mt-3 text-2xl font-semibold text-white">{t('about.builtForSpeed')}</h2>
             <p className="mt-3 text-sm leading-7 text-slate-300">
-              Mahin AI SMS Gateway is designed to help organizations route messages in real time with clarity,
-              operational control, and a smooth user experience.
+              {t('about.speedDesc')}
             </p>
           </article>
         </div>
