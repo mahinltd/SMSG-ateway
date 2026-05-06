@@ -1,5 +1,5 @@
 // ©2026 SMS GATEWAY Mahin Ltd Developed By Tanvir
-import { BadgeCheck, BarChart3, Download, Inbox, LogOut, MessageSquare, Smartphone } from 'lucide-react'
+import { BadgeCheck, BarChart3, Download, Inbox, LogOut, MessageSquare, Smartphone, Users } from 'lucide-react'
 import { Link, NavLink, useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import { useLanguage } from '../context/LanguageContext'
@@ -24,6 +24,11 @@ function Sidebar() {
       label: t('sidebar.messages'),
       path: '/messages',
       icon: MessageSquare,
+    },
+    {
+      label: 'Bulk SMS',
+      path: '/bulk-sms',
+      icon: Users,
     },
     {
       label: t('sidebar.inbox'),

@@ -18,6 +18,7 @@ import ContactPage from './pages/ContactPage'
 import InboxPage from './pages/InboxPage'
 import LoginPage from './pages/LoginPage'
 import MessagesPage from './pages/MessagesPage'
+import BulkSmsPage from './pages/BulkSmsPage'
 import KycVerification from './pages/KycVerification'
 import ForgotPassword from './pages/auth/ForgotPassword'
 import ResetPassword from './pages/auth/ResetPassword'
@@ -176,6 +177,16 @@ function App() {
             <ProtectedRoute>
               <KycGuard>
                 <MessagesPage />
+              </KycGuard>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/bulk-sms"
+          element={
+            <ProtectedRoute>
+              <KycGuard>
+                <BulkSmsPage />
               </KycGuard>
             </ProtectedRoute>
           }
