@@ -9,9 +9,9 @@ function AboutPage() {
             Mahin AI SMS Gateway
           </h1>
           <p className="mt-4 max-w-3xl text-base leading-8 text-slate-300 md:text-lg">
-            Mahin Ltd is a forward-thinking technology company based in Bangladesh, specializing in scalable
-            communication solutions. Our flagship product, Mahin AI SMS Gateway, empowers businesses to transform
-            their Android devices into robust, real-time SMS delivery systems.
+            Mahin Ltd (mahinltd.tech) is a forward-thinking technology company based in Bangladesh. Our flagship
+            product, Mahin AI SMS Gateway, empowers businesses to transform their Android devices into robust,
+            real-time SMS delivery systems.
           </p>
         </div>
 
@@ -42,12 +42,18 @@ function AboutPage() {
               '@context': 'https://schema.org',
               '@type': 'Organization',
               name: 'Mahin Ltd',
-              url: 'https://sms.mahinai.app',
-              logo: 'https://sms.mahinai.app/logo.png',
-              description: 'Provider of Mahin AI SMS Gateway, a modern solution for background SMS routing.',
-              address: {
-                '@type': 'PostalAddress',
-                addressCountry: 'BD, USA,UK, ALL CUNTREY',
+              url: 'https://mahinltd.tech',
+              logo: 'https://mahinltd.tech/logo.png',
+              sameAs: ['https://sms.mahinai.app'],
+              makesOffer: {
+                '@type': 'Offer',
+                itemOffered: {
+                  '@type': 'SoftwareApplication',
+                  name: 'Mahin AI SMS Gateway',
+                  applicationCategory: 'BusinessApplication',
+                  operatingSystem: 'Android, Web',
+                  url: 'https://sms.mahinai.app',
+                },
               },
             }),
           }}
