@@ -7,7 +7,7 @@ import api from '../../services/api'
 function ResetPassword() {
   const navigate = useNavigate()
   const [searchParams] = useSearchParams()
-  const token = searchParams.get('token') || ''
+  const token = searchParams.get('token')
 
   const [newPassword, setNewPassword] = useState('')
   const [isLoading, setIsLoading] = useState(false)
@@ -15,13 +15,19 @@ function ResetPassword() {
 
   const handleSubmit = async (event) => {
     event.preventDefault()
+
+    if (!token) {
+      setError('Invalid or missing password reset token in the URL.')
+      return
+    }
+
     setIsLoading(true)
     setError('')
 
     try {
       await api.post('/auth/reset-password', {
         token,
-        password: newPassword,
+        newPassword,
       })
 
       navigate('/login', { replace: true })
