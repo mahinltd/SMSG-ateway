@@ -19,6 +19,9 @@ import InboxPage from './pages/InboxPage'
 import LoginPage from './pages/LoginPage'
 import MessagesPage from './pages/MessagesPage'
 import KycVerification from './pages/KycVerification'
+import ForgotPassword from './pages/auth/ForgotPassword'
+import ResetPassword from './pages/auth/ResetPassword'
+import KycGuard from './components/KycGuard'
 import PrivacyPage from './pages/PrivacyPage'
 import RegisterPage from './pages/RegisterPage'
 import TermsPage from './pages/TermsPage'
@@ -64,6 +67,8 @@ function DocumentTitleManager() {
     const pathToTitleKey = {
       '/': 'titles.home',
       '/login': 'titles.login',
+      '/forgot-password': 'titles.login',
+      '/reset-password': 'titles.login',
       '/register': 'titles.register',
       '/dashboard': 'titles.dashboard',
       '/dashboard/kyc': 'titles.kycVerification',
@@ -98,6 +103,8 @@ function App() {
             </RedirectIfAuthenticated>
           }
         />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/reset-password" element={<ResetPassword />} />
         <Route
           path="/register"
           element={
@@ -157,7 +164,9 @@ function App() {
           path="/devices"
           element={
             <ProtectedRoute>
-              <DevicesPage />
+              <KycGuard>
+                <DevicesPage />
+              </KycGuard>
             </ProtectedRoute>
           }
         />
@@ -165,7 +174,9 @@ function App() {
           path="/messages"
           element={
             <ProtectedRoute>
-              <MessagesPage />
+              <KycGuard>
+                <MessagesPage />
+              </KycGuard>
             </ProtectedRoute>
           }
         />
@@ -177,7 +188,9 @@ function App() {
           path="/inbox"
           element={
             <ProtectedRoute>
-              <InboxPage />
+              <KycGuard>
+                <InboxPage />
+              </KycGuard>
             </ProtectedRoute>
           }
         />
